@@ -47,12 +47,12 @@
          var newDate;   
          var dVal=dateObj.valueOf();   
          switch(timeU) {   
-         case "ms": newDate=new Date(dVal+millisecond*byMany); break;   
-         case "s": newDate=new Date(dVal+second*byMany); break;   
-         case "mi": newDate=new Date(dVal+minute*byMany); break;   
-         case "h": newDate=new Date(dVal+hour*byMany); break;   
-         case "d": newDate=new Date(dVal+day*byMany); break;   
-         case "y": newDate=new Date(dVal+year*byMany); break;   
+         case 'ms': newDate=new Date(dVal+millisecond*byMany); break;   
+         case 's': newDate=new Date(dVal+second*byMany); break;   
+         case 'mi': newDate=new Date(dVal+minute*byMany); break;   
+         case 'h': newDate=new Date(dVal+hour*byMany); break;   
+         case 'd': newDate=new Date(dVal+day*byMany); break;   
+         case 'y': newDate=new Date(dVal+year*byMany); break;   
          }   
          return newDate;   
         }   
@@ -65,11 +65,11 @@
     
         function getNewDate(dateObj) {
             var log_start_y = dateObj.getFullYear();
-            var log_start_m = "0" + (parseInt(dateObj.getMonth())+parseInt(1));
-            var log_start_d = "0" + dateObj.getDate();
-            var log_start_h = "0" + dateObj.getHours();
-            var log_start_mm = "0" + dateObj.getMinutes();
-            var log_start_s = "0" + dateObj.getSeconds();
+            var log_start_m = '0' + (parseInt(dateObj.getMonth())+parseInt(1));
+            var log_start_d = '0' + dateObj.getDate();
+            var log_start_h = '0' + dateObj.getHours();
+            var log_start_mm = '0' + dateObj.getMinutes();
+            var log_start_s = '0' + dateObj.getSeconds();
             log_start_m = log_start_m.substring(log_start_m.length-2);
             log_start_d = log_start_d.substring(log_start_d.length-2);
             log_start_h = log_start_h.substring(log_start_h.length-2);
