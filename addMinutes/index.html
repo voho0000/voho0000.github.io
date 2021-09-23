@@ -9,8 +9,9 @@
 <body>
     <h1> 把下面這連結拖到IE書籤頁 </h1>
 
-    <a id="addMinutes" href="javascript:addMinutes(detail_frm);
+    <a id="addMinutes" href="javascript:addMinutes();
         function addMinutes(detail_frm) {
+        var detail_frm = document.getElementById('detail_frm');
         var d = new Date();
     
         var diff = getRandomInt(12, 15);
