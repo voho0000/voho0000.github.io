@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>addMinutes</title>
+</head>
+<body>
+    <p> 把下面這連結拖到IE書籤頁 </p>
+
+    <a id="addMinutes" href="javascript:function addMinutes() {
+        var d = new Date();
+    
+        var diff = getRandomInt(12, 15);
+        var start_d = new Date(d - diff*60000);
+        var time_start = getNewDate(start_d);
+        var tmp_end = DateAdd('s',diff*60,start_d);
+        var time_end = getNewDate(tmp_end);
+    
+        const url = new URL(window.location.href);
+        const ascid = url.searchParams.get('ascid');
+        const tmp_his = "N";
+        save_lesson_log(ascid, time_start, time_end, tmp_his);
+    
+    
+        function save_lesson_log(tmp_lesson_id,tmp_log_start,tmp_log_end,tmp_his)
+        {
+    
+           detail_frm.myform.lesson_id.value = tmp_lesson_id;
+           detail_frm.myform.log_start.value = tmp_log_start.substring(0,12);
+           detail_frm.myform.log_end.value = tmp_log_end.substring(0,12);
+           detail_frm.myform.his_record.value = tmp_his;
+           detail_frm.myform.submit();
+         //  top.window.location.reload();
+        }
+    
+        function DateAdd(timeU,byMany,dateObj) {   
+         var millisecond=1;   
+         var second=millisecond*1000;   
+         var minute=second*60;   
+         var hour=minute*60;   
+         var day=hour*24;   
+         var year=day*365;   
+    
+         var newDate;   
+         var dVal=dateObj.valueOf();   
+         switch(timeU) {   
+         case "ms": newDate=new Date(dVal+millisecond*byMany); break;   
+         case "s": newDate=new Date(dVal+second*byMany); break;   
+         case "mi": newDate=new Date(dVal+minute*byMany); break;   
+         case "h": newDate=new Date(dVal+hour*byMany); break;   
+         case "d": newDate=new Date(dVal+day*byMany); break;   
+         case "y": newDate=new Date(dVal+year*byMany); break;   
+         }   
+         return newDate;   
+        }   
+    
+        function getRandomInt(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+    
+        function getNewDate(dateObj) {
+            var log_start_y = dateObj.getFullYear();
+            var log_start_m = "0" + (parseInt(dateObj.getMonth())+parseInt(1));
+            var log_start_d = "0" + dateObj.getDate();
+            var log_start_h = "0" + dateObj.getHours();
+            var log_start_mm = "0" + dateObj.getMinutes();
+            var log_start_s = "0" + dateObj.getSeconds();
+            log_start_m = log_start_m.substring(log_start_m.length-2);
+            log_start_d = log_start_d.substring(log_start_d.length-2);
+            log_start_h = log_start_h.substring(log_start_h.length-2);
+            log_start_mm = log_start_mm.substring(log_start_mm.length-2);
+            log_start_s = log_start_s.substring(log_start_s.length-2);
+            var log_start = log_start_y + log_start_m + log_start_d + log_start_h + log_start_mm + log_start_s;
+            return log_start;
+        }
+    };">addMinutes</a>
+</body>
+</html>
+
