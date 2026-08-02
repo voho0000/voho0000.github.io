@@ -83,6 +83,7 @@
         align-items: center;
         justify-content: space-between;
         gap: 12px;
+        height: 44px;
         margin-bottom: 8px;
       }
       .field-heading label {
@@ -180,6 +181,7 @@
         .field-heading {
           align-items: stretch;
           flex-direction: column;
+          height: auto;
         }
         .settings {
           align-items: stretch;
@@ -236,7 +238,9 @@
           ></textarea>
         </div>
         <div>
-          <label for="output-text">去識別化結果</label>
+          <div class="field-heading">
+            <label for="output-text">去識別化結果</label>
+          </div>
           <textarea
             id="output-text"
             readonly
