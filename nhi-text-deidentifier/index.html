@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; connect-src 'none'; script-src 'self'; worker-src blob:; style-src 'unsafe-inline';"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>文字去識別化工具</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family:
+          Inter, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+        color: #183153;
+        background: #eef4f7;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 32px 16px 56px;
+      }
+      main {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 30px;
+        border-radius: 18px;
+        background: white;
+        box-shadow: 0 16px 50px rgba(24, 49, 83, 0.1);
+      }
+      h1 {
+        margin: 0 0 8px;
+        font-size: 28px;
+      }
+      p {
+        line-height: 1.65;
+      }
+      .privacy {
+        margin: 22px 0;
+        padding: 14px 16px;
+        border-left: 5px solid #16836f;
+        border-radius: 8px;
+        background: #eaf8f4;
+      }
+      .warning {
+        border-left-color: #ca7a11;
+        background: #fff6e8;
+      }
+      .settings {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 18px 0 4px;
+        padding: 12px 14px;
+        border: 1px solid #d4dee6;
+        border-radius: 10px;
+        background: #f8fafc;
+      }
+      .settings label {
+        margin: 0;
+        white-space: nowrap;
+      }
+      .settings select {
+        max-width: none;
+      }
+      .workspace {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: 20px;
+        margin-top: 24px;
+      }
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 17px;
+        font-weight: 700;
+      }
+      .field-heading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 8px;
+      }
+      .field-heading label {
+        margin-bottom: 0;
+      }
+      select {
+        max-width: 230px;
+        padding: 8px 34px 8px 10px;
+        border: 1px solid #bdc9d5;
+        border-radius: 8px;
+        color: #183153;
+        background: white;
+        font: inherit;
+      }
+      textarea {
+        width: 100%;
+        min-height: 390px;
+        padding: 14px;
+        border: 1px solid #bdc9d5;
+        border-radius: 10px;
+        color: inherit;
+        background: #fbfdfe;
+        font: inherit;
+        line-height: 1.6;
+        resize: vertical;
+      }
+      #output-text {
+        background: #f5faf8;
+      }
+      button {
+        display: block;
+        margin: 22px auto 0;
+        padding: 13px 24px;
+        border: 0;
+        border-radius: 10px;
+        color: white;
+        background: #1769aa;
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      #status {
+        min-height: 25px;
+        margin-top: 16px;
+        text-align: center;
+        line-height: 1.55;
+      }
+      #status[data-kind="success"] {
+        color: #08745f;
+      }
+      #status[data-kind="error"] {
+        color: #ad2d2d;
+      }
+      details {
+        margin-top: 26px;
+        padding: 16px;
+        border: 1px solid #d4dee6;
+        border-radius: 10px;
+        background: #f8fafc;
+      }
+      summary {
+        font-weight: 700;
+        cursor: pointer;
+      }
+      #code-editor {
+        min-height: 360px;
+        margin-top: 8px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 13px;
+        line-height: 1.5;
+        white-space: pre;
+      }
+      .rule-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .rule-actions button {
+        margin: 0;
+      }
+      button.secondary {
+        color: #183153;
+        background: #dfe8ef;
+      }
+      @media (max-width: 760px) {
+        main {
+          padding: 22px 18px;
+        }
+        h1 {
+          font-size: 24px;
+        }
+        .workspace {
+          grid-template-columns: 1fr;
+        }
+        .field-heading {
+          align-items: stretch;
+          flex-direction: column;
+        }
+        .settings {
+          align-items: stretch;
+          flex-direction: column;
+        }
+        select {
+          max-width: none;
+          width: 100%;
+        }
+        textarea {
+          min-height: 280px;
+        }
+      }
+    </style>
+    <script src="./dist/browser.js" defer></script>
+  </head>
+  <body>
+    <main>
+      <h1>文字去識別化工具</h1>
+      <p>
+        把文字貼到「原始文字」，處理內容會自動顯示在「去識別化結果」。
+      </p>
+
+      <div class="privacy">
+        <strong>全程只在這個瀏覽器分頁中處理。</strong>
+        文字不會上傳，也不會自動下載或儲存。
+      </div>
+
+      <div class="settings">
+        <label for="name-mode">姓名處理方式</label>
+        <select id="name-mode">
+          <option value="partial">遮住名字中間（例如：王O試）</option>
+          <option value="full">姓名全部去識別化</option>
+        </select>
+      </div>
+
+      <div class="workspace">
+        <div>
+          <div class="field-heading">
+            <label for="input-text">原始文字</label>
+            <select id="sample-data" aria-label="帶入測試資料">
+              <option value="">選擇測試資料……</option>
+              <option value="complete">完整基本資料範例</option>
+              <option value="singleLine">全部文字同一行範例</option>
+              <option value="report">報告文字範例</option>
+              <option value="clinical">只有臨床內容（預期不變）</option>
+            </select>
+          </div>
+          <textarea
+            id="input-text"
+            autocomplete="off"
+            spellcheck="false"
+            placeholder="請在這裡貼上原始文字……"
+          ></textarea>
+        </div>
+        <div>
+          <label for="output-text">去識別化結果</label>
+          <textarea
+            id="output-text"
+            readonly
+            spellcheck="false"
+            placeholder="處理結果會顯示在這裡"
+            aria-describedby="status"
+          ></textarea>
+        </div>
+      </div>
+
+      <div id="status" role="status" aria-live="polite"></div>
+
+      <details>
+        <summary>查看／編輯可直接執行的 JavaScript（進階）</summary>
+        <p>
+          這是完整的 <code>deidentifyText(text)</code> 函式，可以直接複製到
+          瀏覽器或 Node.js 使用。修改後按「執行修改後程式碼」即可比較結果。
+          頁面會在隔離、禁止網路的 Worker 中執行，超過 1.5 秒會自動停止。
+        </p>
+        <label for="code-editor">JavaScript 程式碼</label>
+        <textarea
+          id="code-editor"
+          autocomplete="off"
+          spellcheck="false"
+          wrap="off"
+        ></textarea>
+        <div class="rule-actions">
+          <button id="apply-code" type="button">執行修改後程式碼</button>
+          <button id="copy-code" class="secondary" type="button">複製程式碼</button>
+          <button id="reset-code" class="secondary" type="button">恢復預設</button>
+        </div>
+      </details>
+
+      <div class="privacy warning">
+        <strong>請務必人工檢查結果。</strong>
+        工具會處理有明確標籤的姓名、身分證、生日、病歷號、電話與地址；
+        格式特殊或沒有標籤的內容仍可能漏掉。這是去識別化輔助工具，不是匿名化保證。
+      </div>
+    </main>
+  </body>
+</html>
