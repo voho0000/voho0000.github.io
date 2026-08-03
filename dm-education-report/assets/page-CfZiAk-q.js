@@ -222,7 +222,7 @@ PRx必須明確標示為「未來預測」
     }
   ],
   "overall_comment": "100字以內的整體結論"
-}`,c=[{id:`workbench`,label:`健康存摺安全版（目前預設）`,description:`單一病人版報告，強調資料時效、類型不明與歷史申報安全。`,prompt:i},{id:`colleague`,label:`同事完整版（醫師版＋病人版）`,description:`保留 DCSI、R／PR 規則、固定段落及個別化目標值。`,prompt:a}],l=[{id:`workbench`,label:`八面向安全稽核版（目前預設）`,description:`檢查事實、時間、類型、用藥、數據、可讀性、行動性與隱私。`,prompt:o},{id:`colleague`,label:`同事 PASS／REVISE／FAIL JSON 版`,description:`以病人傷害風險為主，並輸出結構化 JSON 稽核結果。`,prompt:s}],u=n(),d=5*1024*1024,f=`gemini-3.6-flash`,p=`__custom__`,m=`dmEducationGeminiTransientCredential2026`,ee=[{value:`gemini-3.6-flash`,label:`Gemini 3.6 Flash｜預設・較高品質`},{value:`gemini-3.5-flash-lite`,label:`Gemini 3.5 Flash-Lite｜較快・較低成本`},{value:p,label:`自訂模型 ID`}],te=`{
+}`,c=[{id:`workbench`,label:`健康存摺安全版（目前預設）`,description:`單一病人版報告，強調資料時效、類型不明與歷史申報安全。`,prompt:i},{id:`colleague`,label:`v14`,description:`保留 DCSI、R／PR 規則、固定段落及個別化目標值。`,prompt:a}],l=[{id:`workbench`,label:`八面向安全稽核版（目前預設）`,description:`檢查事實、時間、類型、用藥、數據、可讀性、行動性與隱私。`,prompt:o},{id:`colleague`,label:`audit`,description:`以病人傷害風險為主，並輸出結構化 JSON 稽核結果。`,prompt:s}],u=n(),d=5*1024*1024,f=`gemini-3.6-flash`,p=`__custom__`,m=`dmEducationGeminiTransientCredential2026`,ee=[{value:`gemini-3.6-flash`,label:`Gemini 3.6 Flash｜預設・較高品質`},{value:`gemini-3.5-flash-lite`,label:`Gemini 3.5 Flash-Lite｜較快・較低成本`},{value:p,label:`自訂模型 ID`}],te=`{
   "downloadType": "DiabetesEducation",
   "userInfo": { "資料代碼": "DEMO-001" },
   "userInput": {
