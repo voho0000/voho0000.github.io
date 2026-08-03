@@ -1,7 +1,7 @@
 "use strict";
 var NhiRawDeidentifier = (() => {
   // src/text-rules.ts
-  function deidentifyText(text, options = {}) {
+  function deidentifyText(text, options = { nameMode: "partial" }) {
     const nameMode = options?.nameMode === "full" ? "full" : "partial";
     function maskName(name) {
       const trimmed = name.trim();
@@ -51,6 +51,12 @@ var NhiRawDeidentifier = (() => {
     ).replace(
       /((?:病患姓名|病人姓名|患者姓名|姓名)\s*[:：]?\s*)([A-Za-z][A-Za-z .'\-]{1,38})/gi,
       (_match, label, value) => `${label}${nameMode === "full" ? "[已去識別姓名]" : maskName(value)}`
+    );
+  }
+  function setDefaultNameModeInCode(source, nameMode) {
+    return source.replace(
+      /function deidentifyText\(text, options = \{(?: nameMode: "(?:partial|full)" )?\}\)/,
+      `function deidentifyText(text, options = { nameMode: "${nameMode}" })`
     );
   }
   var DEFAULT_DEIDENTIFIER_CODE = `${deidentifyText.toString()}
@@ -229,8 +235,16 @@ self.onmessage = (event) => {
     element("sample-data").value = "";
     scheduleAutoRun();
   }
+  function selectedNameMode() {
+    return element("name-mode").value;
+  }
+  function syncCodeDefaultNameMode() {
+    const editor = element("code-editor");
+    editor.value = setDefaultNameModeInCode(editor.value, selectedNameMode());
+  }
   function handleNameModeChanged() {
     clearScheduledAutoRun();
+    syncCodeDefaultNameMode();
     if (element("input-text").value.trim()) {
       setStatus("姓名處理方式已變更，正在自動更新結果…");
       void runCode();
@@ -246,6 +260,7 @@ self.onmessage = (event) => {
   }
   function restoreDefaultCode() {
     element("code-editor").value = DEFAULT_DEIDENTIFIER_CODE;
+    syncCodeDefaultNameMode();
     if (element("input-text").value.trim()) {
       void runCode();
     } else {
@@ -268,6 +283,7 @@ self.onmessage = (event) => {
   }
   window.addEventListener("DOMContentLoaded", () => {
     element("code-editor").value = DEFAULT_DEIDENTIFIER_CODE;
+    syncCodeDefaultNameMode();
     element("apply-code").addEventListener("click", () => void runCode());
     element("copy-code").addEventListener("click", () => void copyCode());
     element("reset-code").addEventListener("click", restoreDefaultCode);
