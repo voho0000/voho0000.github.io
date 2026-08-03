@@ -222,7 +222,7 @@ PRx必須明確標示為「未來預測」
     }
   ],
   "overall_comment": "100字以內的整體結論"
-}`,c=[{id:`workbench`,label:`健康存摺安全版（目前預設）`,description:`單一病人版報告，強調資料時效、類型不明與歷史申報安全。`,prompt:i},{id:`colleague`,label:`v14`,description:`保留 DCSI、R／PR 規則、固定段落及個別化目標值。`,prompt:a}],l=[{id:`workbench`,label:`八面向安全稽核版（目前預設）`,description:`檢查事實、時間、類型、用藥、數據、可讀性、行動性與隱私。`,prompt:o},{id:`colleague`,label:`audit`,description:`以病人傷害風險為主，並輸出結構化 JSON 稽核結果。`,prompt:s}],u=`20260803173218`,d=[{id:`A`,label:`A｜現行流程・不帶入指引`,description:`生成 LLM 收到 system prompt 與病人資料；不附指引全文。`,usesGuideline:!1,llmWritesPatientText:!0},{id:`B`,label:`B｜現行流程・帶入指引全文`,description:`生成與稽核都額外附上整份《2022第2型糖尿病臨床照護指引》。需先載入指引 TXT。`,usesGuideline:!0,llmWritesPatientText:!0},{id:`C`,label:`C｜模組選擇流程（草案・未經醫療團隊核准）`,description:`LLM 只依病人資料輸出模組代碼與選取理由；病人可見正文由程式以固定文字組合，LLM 不改寫、不補數值。`,usesGuideline:!1,llmWritesPatientText:!1}];function f(e){let t=d.find(t=>t.id===e);if(!t)throw Error(`未知的流程 arm：${e}`);return t}function p(e){if(e.totalTokens<=e.tokenLimit)return null;let t=e.totalTokens-e.tokenLimit;return{code:`token-limit`,message:`估計輸入約 ${e.totalTokens.toLocaleString(`zh-TW`)} tokens，超過模型上限 ${e.tokenLimit.toLocaleString(`zh-TW`)} tokens 約 ${t.toLocaleString(`zh-TW`)} tokens。`,howToFix:`本工具不會自動截斷指引或病人資料。請改選不帶入指引的 A，或改用輸入上限更大的模型。`,hard:!0}}function m(e){let t=[];return e.model||t.push({code:`no-model`,message:`還沒選定 Gemini 模型。`,howToFix:`請在模型下拉選單選擇，或在自訂欄位輸入完整的模型 ID。`,hard:!0}),e.requiresClientKey&&!e.apiKey.trim()&&t.push({code:`no-api-key`,message:`這個版本沒有伺服器可以代為保管金鑰，必須在頁面輸入 Gemini 金鑰。`,howToFix:`請在上方「Gemini 臨時存取金鑰」貼上金鑰。重新整理頁面即清除，不會寫入任何儲存空間。`,hard:!0}),e.arm===`B`&&!e.guidelineText.trim()&&t.push({code:`guideline-missing`,message:`已選 B（帶入指引全文），但目前沒有載入任何指引 TXT。`,howToFix:`請先按「載入指引 TXT」選擇完整的指引檔案；否則請改選 A，以免以為帶入了其實沒有。`,hard:!0}),t}function ee(e){let t=[];e.llmText.trim()||t.push(e.rawInput.trim()?{code:`not-formatted`,message:`已經有原始病人資料，但還沒整理成 LLM 好讀文字。`,howToFix:`請按上方步驟 01 的「整理為 LLM 好讀文字」。更換病人檔案後也需要重新整理一次。`,hard:!0}:{code:`no-patient-data`,message:`還沒有病人資料。`,howToFix:`請在步驟 01 上傳 JSON／TXT、貼上文字，或按「載入去識別示範」，再按「整理為 LLM 好讀文字」。`,hard:!0}),e.arm!==`C`&&!e.generatorPrompt.trim()&&t.push({code:`empty-generator-prompt`,message:`生成用的 system prompt 是空白的。`,howToFix:`請在下方貼上 prompt，或按「恢復工作台預設」載回預設版本。`,hard:!0}),t.push(...m(e));let n=p(e);return n&&t.push(n),t}function te(e){let t=[];e.llmText.trim()||t.push({code:`no-patient-data`,message:`稽核需要 LLM 好讀病人資料，目前是空的。`,howToFix:`請先完成步驟 01 的整理。`,hard:!0}),e.report.trim()||t.push({code:`no-report`,message:`還沒有可稽核的報告。`,howToFix:`請先執行「生成衛教報告」，或直接把要稽核的報告貼進報告欄位。`,hard:!0}),e.evalPrompt.trim()||t.push({code:`empty-eval-prompt`,message:`稽核用的 system prompt 是空白的。`,howToFix:`請在下方貼上 prompt，或按「恢復工作台預設」載回預設版本。`,hard:!0}),t.push(...m(e));let n=p(e);return n&&t.push(n),t}function ne(e){return e.some(e=>e.hard)}var re=652078,ie=283353,ae=1048576;function h(e){return e>=19968&&e<=40959||e>=13312&&e<=19903||e>=63744&&e<=64255||e>=12288&&e<=12351||e>=65280&&e<=65519}function g(e){let t=0,n=0,r=0,i=0,a=0;for(let o of e){a+=1;let e=o.codePointAt(0)??0;h(e)?t+=1:e<128?o===` `||o===`	`||o===`
+}`,c=[{id:`workbench`,label:`健康存摺安全版（目前預設）`,description:`單一病人版報告，強調資料時效、類型不明與歷史申報安全。`,prompt:i},{id:`colleague`,label:`v14`,description:`保留 DCSI、R／PR 規則、固定段落及個別化目標值。`,prompt:a}],l=[{id:`workbench`,label:`八面向安全稽核版（目前預設）`,description:`檢查事實、時間、類型、用藥、數據、可讀性、行動性與隱私。`,prompt:o},{id:`colleague`,label:`audit`,description:`以病人傷害風險為主，並輸出結構化 JSON 稽核結果。`,prompt:s}],u=`20260803174443`,d=[{id:`A`,label:`A｜現行流程・不帶入指引`,description:`生成 LLM 收到 system prompt 與病人資料；不附指引全文。`,usesGuideline:!1,llmWritesPatientText:!0},{id:`B`,label:`B｜現行流程・帶入指引全文`,description:`生成與稽核都額外附上整份《2022第2型糖尿病臨床照護指引》。需先載入指引 TXT。`,usesGuideline:!0,llmWritesPatientText:!0},{id:`C`,label:`C｜模組選擇流程（草案・未經醫療團隊核准）`,description:`LLM 只依病人資料輸出模組代碼與選取理由；病人可見正文由程式以固定文字組合，LLM 不改寫、不補數值。`,usesGuideline:!1,llmWritesPatientText:!1}];function f(e){let t=d.find(t=>t.id===e);if(!t)throw Error(`未知的流程 arm：${e}`);return t}function p(e){if(e.totalTokens<=e.tokenLimit)return null;let t=e.totalTokens-e.tokenLimit;return{code:`token-limit`,message:`估計輸入約 ${e.totalTokens.toLocaleString(`zh-TW`)} tokens，超過模型上限 ${e.tokenLimit.toLocaleString(`zh-TW`)} tokens 約 ${t.toLocaleString(`zh-TW`)} tokens。`,howToFix:`本工具不會自動截斷指引或病人資料。請改選不帶入指引的 A，或改用輸入上限更大的模型。`,hard:!0}}function m(e){let t=[];return e.model||t.push({code:`no-model`,message:`還沒選定 Gemini 模型。`,howToFix:`請在模型下拉選單選擇，或在自訂欄位輸入完整的模型 ID。`,hard:!0}),e.requiresClientKey&&!e.apiKey.trim()&&t.push({code:`no-api-key`,message:`這個版本沒有伺服器可以代為保管金鑰，必須在頁面輸入 Gemini 金鑰。`,howToFix:`請在上方「Gemini 臨時存取金鑰」貼上金鑰。重新整理頁面即清除，不會寫入任何儲存空間。`,hard:!0}),e.arm===`B`&&!e.guidelineText.trim()&&t.push({code:`guideline-missing`,message:`已選 B（帶入指引全文），但目前沒有載入任何指引 TXT。`,howToFix:`請先按「載入指引 TXT」選擇完整的指引檔案；否則請改選 A，以免以為帶入了其實沒有。`,hard:!0}),t}function ee(e){let t=[];e.llmText.trim()||t.push(e.rawInput.trim()?{code:`not-formatted`,message:`已經有原始病人資料，但還沒整理成 LLM 好讀文字。`,howToFix:`請按上方步驟 01 的「整理為 LLM 好讀文字」。更換病人檔案後也需要重新整理一次。`,hard:!0}:{code:`no-patient-data`,message:`還沒有病人資料。`,howToFix:`請在步驟 01 上傳 JSON／TXT、貼上文字，或按「載入去識別示範」，再按「整理為 LLM 好讀文字」。`,hard:!0}),e.arm!==`C`&&!e.generatorPrompt.trim()&&t.push({code:`empty-generator-prompt`,message:`生成用的 system prompt 是空白的。`,howToFix:`請在下方貼上 prompt，或按「恢復工作台預設」載回預設版本。`,hard:!0}),t.push(...m(e));let n=p(e);return n&&t.push(n),t}function te(e){let t=[];e.llmText.trim()||t.push({code:`no-patient-data`,message:`稽核需要 LLM 好讀病人資料，目前是空的。`,howToFix:`請先完成步驟 01 的整理。`,hard:!0}),e.report.trim()||t.push({code:`no-report`,message:`還沒有可稽核的報告。`,howToFix:`請先執行「生成衛教報告」，或直接把要稽核的報告貼進報告欄位。`,hard:!0}),e.evalPrompt.trim()||t.push({code:`empty-eval-prompt`,message:`稽核用的 system prompt 是空白的。`,howToFix:`請在下方貼上 prompt，或按「恢復工作台預設」載回預設版本。`,hard:!0}),t.push(...m(e));let n=p(e);return n&&t.push(n),t}function ne(e){return e.some(e=>e.hard)}var re=652078,ie=283353,ae=1048576;function h(e){return e>=19968&&e<=40959||e>=13312&&e<=19903||e>=63744&&e<=64255||e>=12288&&e<=12351||e>=65280&&e<=65519}function g(e){let t=0,n=0,r=0,i=0,a=0;for(let o of e){a+=1;let e=o.codePointAt(0)??0;h(e)?t+=1:e<128?o===` `||o===`	`||o===`
 `||o===`\r`||o===`\f`||o===`\v`?r+=1:n+=1:i+=1}return{total:a,cjk:t,asciiVisible:n,whitespace:r,other:i}}function oe(e){if(!e)return 0;let{cjk:t,asciiVisible:n,whitespace:r,other:i}=g(e);return Math.round(t+n/4+r/5+i/2)}function se(e){return e?[...e].length===652078?{tokens:ie,method:`measured`}:{tokens:oe(e),method:`estimate`}:{tokens:0,method:`estimate`}}function ce(e){return[...e].length}function _(e){return e.toLocaleString(`zh-TW`)}var le=`【參考指引全文：2022第2型糖尿病臨床照護指引】`;function ue(e,t,n){let r=n??{tokens:oe(t),method:`estimate`};return{label:e,chars:ce(t),tokens:r.tokens,method:r.method}}function de(e,t,n){let r=n.text??``,i=r.trim().length>0,a=n.include&&i,o=t.map(e=>e.text),s=a?`${o.join(`
 
 `)}\n\n${le}\n${r}`:o.join(`
@@ -257,10 +257,6 @@ PRx必須明確標示為「未來預測」
 3. 按醫療團隊共同訂定的目標照顧血糖、血壓與血脂；若有吸菸，請尋求戒菸協助。
 4. 若正在計畫懷孕、已懷孕，或近期血糖快速改變，請主動告知眼科與糖尿病照護團隊。
 
-下次回診可以確認
-
-1. 我上一次眼底檢查是何時？結果是否需要眼科追蹤？
-2. 我下一次檢查應安排在何時？需要散瞳檢查，還是眼底攝影即可？
 
 需要立即處理的情況
 
@@ -275,10 +271,6 @@ PRx必須明確標示為「未來預測」
 3. 若有吸菸，請尋求戒菸門診或戒菸專線協助。飲食、活動與體重目標則依個人身體狀況和醫療團隊共同訂定。
 4. 若曾有短暫單側無力、嘴歪、說話不清、突然視力異常或走路不穩，即使症狀後來消失，也要儘速告訴醫師。
 
-下次回診可以確認
-
-1. 我的血壓、血脂與血糖控制目標各是多少？
-2. 我是否有心房顫動、頸動脈問題或曾經短暫性腦缺血，需要進一步追蹤？
 
 需要立即處理的情況
 
@@ -294,11 +286,6 @@ PRx必須明確標示為「未來預測」
 4. 不自行長期服用非處方消炎止痛藥，也不要使用成分不明的中草藥、保健品或偏方。這不代表要停用醫師開立的藥物；任何處方調整都應由醫師決定。
 5. 飲水量、鹽分、蛋白質與鉀的限制需依個人腎功能、心臟狀況與營養評估決定，不要自行套用網路上的腎臟飲食。
 
-下次回診可以確認
-
-1. 我的 UACR、肌酸酐與 eGFR 各是多少？和上一次相比是否穩定？
-2. 現在的藥物是否需要依腎功能調整？多久應再檢查一次？
-3. 是否需要轉介腎臟科或營養師？
 
 需要儘速就醫的情況
 
@@ -313,11 +300,6 @@ PRx必須明確標示為「未來預測」
 3. 若出現站起來容易暈、心跳異常、反覆噁心或腹瀉便祕、排尿困難、性功能改變，或低血糖時越來越沒有警訊，請主動告訴醫療團隊，因為這些也可能和自主神經功能有關。
 4. 依醫療團隊共同訂定的目標照顧血糖、血壓與血脂；不要自行購買止痛藥或神經痛藥物長期服用。
 
-下次回診可以確認
-
-1. 我是否需要做足部感覺、單股尼龍纖維、音叉震動感或跟腱反射檢查？
-2. 麻木或疼痛是否可能有糖尿病以外的原因，例如維生素 B12、甲狀腺或腎功能問題？
-3. 如果疼痛影響睡眠或走路，適合我的治療方式是什麼？
 
 需要儘速就醫的情況
 
@@ -332,11 +314,6 @@ PRx必須明確標示為「未來預測」
 3. 若有吸菸，請尋求戒菸協助。運動強度應依體力、心臟狀況、足部狀況和醫療團隊建議逐步增加；若活動時胸悶或喘，先停止活動並接受評估。
 4. 留意近期是否比以前更容易喘、平躺時喘、腳腫、心悸、容易疲倦，或短時間內體重快速增加，並把變化告訴醫療團隊。
 
-下次回診可以確認
-
-1. 我的血壓與低密度脂蛋白膽固醇（LDL-C）目標是多少？
-2. 我是否需要進一步評估冠狀動脈疾病或心臟衰竭？
-3. 目前藥物是否已兼顧血糖、心臟與腎臟安全？任何調整都應由醫師決定。
 
 需要立即處理的情況
 
@@ -352,11 +329,6 @@ PRx必須明確標示為「未來預測」
 4. 規律活動可能有幫助，但若已有足部傷口、休息時也疼痛、明顯變色或疑似嚴重缺血，應先接受醫療評估，再決定適合的運動方式。
 5. 依醫療團隊安排管理血糖、血壓與血脂，並規律使用處方藥；不要自行購買抗血小板藥物，也不要自行停用既有處方。
 
-下次回診可以確認
-
-1. 是否需要檢查足部脈搏，或安排足踝／腳趾與手臂血壓比值（ABI／TBI）？
-2. 我的足部傷口和走路疼痛是否與循環不足有關？
-3. 適合我的走路訓練與鞋具是什麼？
 
 需要立即處理的情況
 
@@ -367,24 +339,14 @@ PRx必須明確標示為「未來預測」
 1. 找出最近一次的糖化血色素、血壓、血脂與腎功能檢查結果與日期。若不確定，可在回診時請醫療團隊協助查詢。
 2. 若醫療團隊建議您在家測血糖，請記錄測量的時間點（空腹、飯後或睡前）與數值，回診時一起帶去。
 3. 在家量血壓時，先坐著休息五分鐘，手臂與心臟同高，同一時間每天量，並把數值記下來。
-4. 不要只看單一次的數字。一段時間的變化比單次結果更能反映真實狀況。
-
-下次回診可以確認
-
-1. 我的糖化血色素、血壓與血脂目標各是多少？
-2. 我需要在家自我監測血糖嗎？多久測一次、什麼時間點測？`},{id:`SC-MEDS`,behavior:`taking-medication`,title:`把藥用對、用得安全`,core:!0,appliesWhen:`每份報告固定納入。`,patientText:`把藥用對、用得安全
+4. 不要只看單一次的數字。一段時間的變化比單次結果更能反映真實狀況。`},{id:`SC-MEDS`,behavior:`taking-medication`,title:`把藥用對、用得安全`,core:!0,appliesWhen:`每份報告固定納入。`,patientText:`把藥用對、用得安全
 
 規律用藥是控制糖尿病最直接的一環，而任何調整都應該由醫師決定。
 
 1. 依醫師指示的時間與劑量服藥。若經常忘記，可使用藥盒、手機提醒，或請醫療團隊協助簡化用藥。
 2. 服藥後若出現不舒服，先聯絡醫療團隊或藥師確認，不要自行停藥、減藥或更換藥品。
 3. 每次看診、看牙或到藥局時，主動出示目前所有正在使用的藥品清單，包含中草藥、保健食品與別家醫院開立的藥。
-4. 不要自行購買來路不明的藥品、偏方或宣稱可以取代處方的產品。
-
-下次回診可以確認
-
-1. 我目前實際在使用的藥有哪些？有沒有可以簡化的？
-2. 我的藥物需要依腎功能或年齡調整嗎？`},{id:`SC-EAT`,behavior:`healthy-eating`,title:`吃得穩定，不必吃得痛苦`,core:!0,appliesWhen:`每份報告固定納入。`,patientText:`吃得穩定，不必吃得痛苦
+4. 不要自行購買來路不明的藥品、偏方或宣稱可以取代處方的產品。`},{id:`SC-EAT`,behavior:`healthy-eating`,title:`吃得穩定，不必吃得痛苦`,core:!0,appliesWhen:`每份報告固定納入。`,patientText:`吃得穩定，不必吃得痛苦
 
 糖尿病的飲食不是不能吃，而是讓份量與時間穩定下來。
 
@@ -392,12 +354,7 @@ PRx必須明確標示為「未來預測」
 2. 主食（飯、麵、麵包、根莖類、水果）是影響血糖最主要的來源。份量比種類更重要，可請營養師協助換算適合您的份量。
 3. 每餐先吃蔬菜與蛋白質，再吃主食，有助於減緩血糖上升。
 4. 含糖飲料是最容易被忽略的來源，包含手搖飲、罐裝飲料與運動飲料。改喝白開水或無糖茶是最快見效的一步。
-5. 若同時有腎臟或心臟問題，鹽分、蛋白質與水分的限制需要依個人狀況設計，不要自行套用網路上的飲食法。
-
-下次回診可以確認
-
-1. 適合我的每餐主食份量大約是多少？
-2. 我可以轉介營養師做個別化的飲食計畫嗎？`},{id:`SC-ACTIVE`,behavior:`being-active`,title:`動起來，從做得到的強度開始`,core:!0,appliesWhen:`每份報告固定納入。`,patientText:`動起來，從做得到的強度開始
+5. 若同時有腎臟或心臟問題，鹽分、蛋白質與水分的限制需要依個人狀況設計，不要自行套用網路上的飲食法。`},{id:`SC-ACTIVE`,behavior:`being-active`,title:`動起來，從做得到的強度開始`,core:!0,appliesWhen:`每份報告固定納入。`,patientText:`動起來，從做得到的強度開始
 
 規律活動能同時改善血糖、血壓與血脂，重點是能持續。
 
@@ -405,24 +362,14 @@ PRx必須明確標示為「未來預測」
 2. 盡量減少長時間久坐。每坐約一小時起來活動幾分鐘，累積起來也有效果。
 3. 活動時穿合腳的鞋襪，結束後檢查雙腳有沒有磨破或紅腫。
 4. 若活動時出現胸悶、胸痛、明顯喘不過氣、頭暈或冒冷汗，請立即停止並儘速就醫。
-5. 若已有足部傷口、視網膜病變、心臟疾病或平衡問題，開始新的運動前請先與醫療團隊討論適合的方式與強度。
-
-下次回診可以確認
-
-1. 以我目前的身體狀況，適合哪一類活動？有沒有需要避免的動作？
-2. 我需要先做運動前評估嗎？`},{id:`SC-RISK-REDUCE`,behavior:`reducing-risks`,title:`降低併發症風險的例行事項`,core:!0,appliesWhen:`每份報告固定納入。`,patientText:`降低併發症風險的例行事項
+5. 若已有足部傷口、視網膜病變、心臟疾病或平衡問題，開始新的運動前請先與醫療團隊討論適合的方式與強度。`},{id:`SC-RISK-REDUCE`,behavior:`reducing-risks`,title:`降低併發症風險的例行事項`,core:!0,appliesWhen:`每份報告固定納入。`,patientText:`降低併發症風險的例行事項
 
 有些事情一年只要做一次，但少做的代價很大。
 
 1. 依醫療團隊安排完成每年的眼底、腎功能、足部與口腔檢查。這些檢查在早期通常沒有症狀，不能靠感覺判斷要不要做。
 2. 若有吸菸，戒菸是對血管保護效益最大的一件事，可請醫療團隊轉介戒菸服務或撥打戒菸專線。
 3. 依醫療團隊建議接種疫苗。
-4. 維持口腔清潔並定期洗牙。牙周發炎與血糖控制會互相影響。
-
-下次回診可以確認
-
-1. 我今年還有哪些檢查沒有完成？
-2. 我適合接種哪些疫苗？`},{id:`SC-HYPO`,behavior:`problem-solving`,title:`認識低血糖並知道怎麼處理`,core:!1,appliesWhen:`資料中有胰島素或促胰島素分泌劑（如 sulfonylurea、glinide）的申報紀錄時納入。`,patientText:`認識低血糖並知道怎麼處理
+4. 維持口腔清潔並定期洗牙。牙周發炎與血糖控制會互相影響。`},{id:`SC-HYPO`,behavior:`problem-solving`,title:`認識低血糖並知道怎麼處理`,core:!1,appliesWhen:`資料中有胰島素或促胰島素分泌劑（如 sulfonylurea、glinide）的申報紀錄時納入。`,patientText:`認識低血糖並知道怎麼處理
 
 某些糖尿病藥物可能造成低血糖，事先知道怎麼處理就不會慌張。
 
@@ -434,12 +381,7 @@ PRx必須明確標示為「未來預測」
 
 需要立即處理的情況
 
-若出現意識不清、抽搐或無法自行吞嚥，旁人不可強行餵食，請立即撥打 119。
-
-下次回診可以確認
-
-1. 我目前的藥物中，哪些可能造成低血糖？
-2. 我最近是否有低血糖發作？需要調整治療嗎？`},{id:`SC-SICKDAY`,behavior:`problem-solving`,title:`生病或使用類固醇期間的照護`,core:!1,appliesWhen:`資料中有全身性類固醇的申報紀錄，或年齡 65 歲以上，或已發生併發症項目較多時納入。`,patientText:`生病或使用類固醇期間的照護
+若出現意識不清、抽搐或無法自行吞嚥，旁人不可強行餵食，請立即撥打 119。`},{id:`SC-SICKDAY`,behavior:`problem-solving`,title:`生病或使用類固醇期間的照護`,core:!1,appliesWhen:`資料中有全身性類固醇的申報紀錄，或年齡 65 歲以上，或已發生併發症項目較多時納入。`,patientText:`生病或使用類固醇期間的照護
 
 感染、發燒或使用類固醇期間，血糖可能明顯上升。
 
@@ -488,7 +430,7 @@ PRx必須明確標示為「未來預測」
   "disagreements": [
     { "topic": "R3", "program_decision": "程式的判定", "your_view": "你的看法與理由" }
   ]
-}`;function Be(e){let t=e.trim(),n=t.match(/```(?:json)?\s*([\s\S]*?)```/i),r=n?n[1].trim():t,i;try{i=JSON.parse(r)}catch{let e=r.indexOf(`{`),t=r.lastIndexOf(`}`);if(e===-1||t<=e)throw Error(`輔助判讀器沒有回傳可解析的 JSON。`);i=JSON.parse(r.slice(e,t+1))}if(!i||typeof i!=`object`)throw Error(`輔助判讀器回傳的不是 JSON 物件。`);let a=i,o=e=>Array.isArray(e)?e.filter(e=>typeof e==`string`).map(String):[];return{priorities:(Array.isArray(a.priorities)?a.priorities:[]).filter(e=>!!e&&typeof e==`object`).map(e=>({module_id:String(e.module_id??``).trim(),why:String(e.why??``).trim()})).filter(e=>e.module_id),clinician_notes:o(a.clinician_notes),data_concerns:o(a.data_concerns),disagreements:(Array.isArray(a.disagreements)?a.disagreements:[]).filter(e=>!!e&&typeof e==`object`).map(e=>({topic:String(e.topic??``).trim(),program_decision:String(e.program_decision??``).trim(),your_view:String(e.your_view??``).trim()})).filter(e=>e.topic)}}function Ve(e,t){let n=Re(t),r=n.filter(e=>e.kind===`established`).sort((e,t)=>(t.rValue??0)-(e.rValue??0)||e.topic-t.topic),i=n.filter(e=>e.kind===`prevention-active`||e.kind===`status-unconfirmed`).sort((e,t)=>e.topic-t.topic),a=n.filter(e=>e.kind===`prevention-moderate`).sort((e,t)=>e.topic-t.topic),o=t.diabetesType.verdict===`type1-confirmed`?`T1`:t.diabetesType.verdict===`type2-confirmed`?`T2`:null,s={"EYE-CORE":`EYE`,"KIDNEY-CORE":`KIDNEY`,"NERVE-CORE":`NERVE`},c=[];for(let e of[...r,...i]){c.push(e.moduleId);let t=s[e.moduleId];o&&t&&A.has(`${t}-${o}`)&&c.push(`${t}-${o}`)}let l=[`BASE-01`],u=t.diabetesType.verdict;(u===`conflicting`||u===`absent`)&&l.push(`TYPE-UNCLEAR`),l.push(...c),(c.includes(`NERVE-CORE`)||c.includes(`LEG-CIRCULATION-CORE`))&&l.push(`BASE-02`);let d=je(t),f=new Set([...l,...d.moduleIds,...a.map(e=>e.moduleId)]),p=(e?.priorities??[]).map(e=>e.module_id).filter(e=>!f.has(e));return{decisions:n,topicModuleIds:c,moderateTopics:a,selfCareModuleIds:d.moduleIds,selfCareReasons:d.reasons,patientModuleIds:l,targets:Fe(t),selection:e,rejectedPriorities:p}}function H(){return[`※ DRAFT｜衛教模組 ${Ae}／自我照護模組 ${j}／指引門檻表 ${Me} 均尚未經醫療團隊核准，僅供流程比較，不得提供給病人。`,``]}var He={established:`以下這一段，是因為您的既往健康資料顯示已經有這方面的狀況。`,"prevention-active":`以下這一段是預防性的。依您的既往健康資料評估，這一項建議採取比較積極的追蹤與預防。這是風險評估，不代表您已經有這個疾病。`,"status-unconfirmed":`以下這一段建議您特別留意。依您的既往健康資料評估，這一項需要比較積極的追蹤；但目前資料無法確認您是否已經有這方面的狀況，請在回診時向醫療團隊確認。`,"prevention-moderate":``};function Ue(e,t){let n=[...H()];n.push(`糖尿病衛教報告`),n.push(`報告產生日期：${t.reportDate??`未提供`}`),n.push(`資料截至日期：${t.dataCutoff??`未提供`}`),n.push(``);let r=new Map(e.decisions.map(e=>[e.moduleId,e.kind]));for(let t of e.patientModuleIds){let e=A.get(t);if(!e)continue;let i=r.get(t);(i===`established`||i===`prevention-active`||i===`status-unconfirmed`)&&n.push(He[i],``),n.push(e.patientText,``)}if(e.moderateTopics.length&&(n.push(`持續留意但目前不需要特別加強的項目`,``),n.push(`以下項目依您的既往健康資料評估，目前建議維持適度追蹤即可。這些是風險評估而不是診斷；如果您已經有相關診斷，請以醫療團隊的評估為準。`,``),e.moderateTopics.forEach((e,t)=>{n.push(`${t+1}. ${e.topicName}：依醫療團隊安排持續定期檢查，若出現新的不適再主動提出。`)}),n.push(``)),e.selfCareModuleIds.length){n.push(`每天可以做的事`,``);for(let t of e.selfCareModuleIds){let e=N.get(t);e&&n.push(e.patientText,``)}}return n.join(`
+}`;function Be(e){let t=e.trim(),n=t.match(/```(?:json)?\s*([\s\S]*?)```/i),r=n?n[1].trim():t,i;try{i=JSON.parse(r)}catch{let e=r.indexOf(`{`),t=r.lastIndexOf(`}`);if(e===-1||t<=e)throw Error(`輔助判讀器沒有回傳可解析的 JSON。`);i=JSON.parse(r.slice(e,t+1))}if(!i||typeof i!=`object`)throw Error(`輔助判讀器回傳的不是 JSON 物件。`);let a=i,o=e=>Array.isArray(e)?e.filter(e=>typeof e==`string`).map(String):[];return{priorities:(Array.isArray(a.priorities)?a.priorities:[]).filter(e=>!!e&&typeof e==`object`).map(e=>({module_id:String(e.module_id??``).trim(),why:String(e.why??``).trim()})).filter(e=>e.module_id),clinician_notes:o(a.clinician_notes),data_concerns:o(a.data_concerns),disagreements:(Array.isArray(a.disagreements)?a.disagreements:[]).filter(e=>!!e&&typeof e==`object`).map(e=>({topic:String(e.topic??``).trim(),program_decision:String(e.program_decision??``).trim(),your_view:String(e.your_view??``).trim()})).filter(e=>e.topic)}}function Ve(e,t){let n=Re(t),r=n.filter(e=>e.kind===`established`).sort((e,t)=>(t.rValue??0)-(e.rValue??0)||e.topic-t.topic),i=n.filter(e=>e.kind===`prevention-active`||e.kind===`status-unconfirmed`).sort((e,t)=>e.topic-t.topic),a=n.filter(e=>e.kind===`prevention-moderate`).sort((e,t)=>e.topic-t.topic),o=t.diabetesType.verdict===`type1-confirmed`?`T1`:t.diabetesType.verdict===`type2-confirmed`?`T2`:null,s={"EYE-CORE":`EYE`,"KIDNEY-CORE":`KIDNEY`,"NERVE-CORE":`NERVE`},c=[];for(let e of[...r,...i]){c.push(e.moduleId);let t=s[e.moduleId];o&&t&&A.has(`${t}-${o}`)&&c.push(`${t}-${o}`)}let l=[`BASE-01`],u=t.diabetesType.verdict;(u===`conflicting`||u===`absent`)&&l.push(`TYPE-UNCLEAR`),l.push(...c),(c.includes(`NERVE-CORE`)||c.includes(`LEG-CIRCULATION-CORE`))&&l.push(`BASE-02`);let d=je(t),f=new Set([...l,...d.moduleIds,...a.map(e=>e.moduleId)]),p=(e?.priorities??[]).map(e=>e.module_id).filter(e=>!f.has(e));return{decisions:n,topicModuleIds:c,moderateTopics:a,selfCareModuleIds:d.moduleIds,selfCareReasons:d.reasons,patientModuleIds:l,targets:Fe(t),selection:e,rejectedPriorities:p}}function H(){return[`※ DRAFT｜衛教模組 ${Ae}／自我照護模組 ${j}／指引門檻表 ${Me} 均尚未經醫療團隊核准，僅供流程比較，不得提供給病人。`,``]}var He={established:`以下這一段，是因為您的既往健康資料顯示已經有這方面的狀況。`,"prevention-active":`以下這一段是預防性的。依您的既往健康資料評估，這一項建議採取比較積極的追蹤與預防。這是風險評估，不代表您已經有這個疾病。`,"status-unconfirmed":`以下這一段建議您特別留意。依您的既往健康資料評估，這一項需要比較積極的追蹤；但目前資料無法確認您是否已經有這方面的狀況，請在回診時向醫療團隊確認。`,"prevention-moderate":``};function Ue(e,t){let n=[...H()];n.push(`糖尿病衛教報告`),n.push(`報告產生日期：${t.reportDate??`未提供`}`),n.push(`資料截至日期：${t.dataCutoff??`未提供`}`),n.push(``);let r=new Map(e.decisions.map(e=>[e.moduleId,e.kind]));for(let t of e.patientModuleIds){let e=A.get(t);if(!e)continue;let i=r.get(t);(i===`established`||i===`prevention-active`||i===`status-unconfirmed`)&&n.push(He[i],``),n.push(e.patientText,``)}if(e.moderateTopics.length&&(n.push(`持續留意但目前不需要特別加強的項目`,``),n.push(`以下項目依您的既往健康資料評估，目前建議維持適度追蹤即可。這些是風險評估而不是診斷；如果您已經有相關診斷，請以醫療團隊的評估為準。`,``),e.moderateTopics.forEach((e,t)=>{n.push(`${t+1}. ${e.topicName}：依醫療團隊安排持續定期檢查，若出現新的不適再主動提出。`)}),n.push(``)),e.selfCareModuleIds.length){n.push(`每天可以做的事`,``);for(let t of e.selfCareModuleIds){let e=N.get(t);e&&n.push(e.patientText,``)}}return n.push(`最後`,``,`這份報告不需要您逐項記下來，也不需要帶著問題去考醫師。檢查時程與治療調整，醫療團隊會依您的狀況安排；您只要把身體的變化、生活上的困難，還有吃藥時遇到的問題告訴他們就好。`,``,`看完覺得要做的事很多是正常的。不必一次全部做到，挑一件現在做得到的先開始，就已經是有效的改變。`),n.join(`
 `).trimEnd()}function We(e,t,n){let r=[...H()];r.push(`【AI 醫療人員報告】`),r.push(`報告產生日期：${n.reportDate??`未提供`}`),r.push(`資料截至日期：${n.dataCutoff??`未提供`}`),r.push(`年齡：${t.ageYears.known?`${t.ageYears.value} 歲`:`未提供`}｜性別代碼：${t.sexCode.known?t.sexCode.value:`未提供`}｜病程：${t.diabetesDurationYears.known?`${t.diabetesDurationYears.value} 年`:`未提供`}`),r.push(``),r.push(`一、疾病嚴重度與風險預測（代碼與分數）`),r.push(`DCSI 總分：${t.dcsiTotal.known?t.dcsiTotal.value:`來源未提供`}`),r.push(`已發生併發症現況：`);for(let e of t.existingComplications)r.push(`  ${e.code}：${e.present?e.rawValue:`來源未出現此欄位（不得視為 0）`}`);r.push(`未來風險預測：`);for(let e of t.riskPredictions){let t=e.present&&e.value!==null?V[e.value]??`未定義分級`:``;r.push(`  ${e.code}：${e.present?`${e.rawValue}（${t}）`:`來源未出現此欄位（不得視為 0）`}`)}r.push(``),r.push(`二、主題納入判定（程式，依 R／PR）`);for(let t of e.decisions){let e=t.kind===`established`?`已發生・完整模組`:t.kind===`prevention-active`?`積極照護・完整模組`:t.kind===`status-unconfirmed`?`⚠ 現況不明・完整模組（R 缺值，未敘述為尚未發生）`:t.kind===`prevention-moderate`?`適度介入・簡短提醒`:`不納入`;r.push(`  R${t.topic} ${t.topicName}｜${e}｜${t.reason}`)}r.push(``),r.push(`三、糖尿病類型`),r.push(`  程式判定：${t.diabetesType.verdict}`),r.push(`  第一型診斷碼：${t.diabetesType.type1IcdCodes.join(`、`)||`無`}`),r.push(`  第二型診斷碼：${t.diabetesType.type2IcdCodes.join(`、`)||`無`}`),r.push(`  說明：${t.diabetesType.note}`),r.push(``),r.push(`四、個別化目標（依指引門檻表推導）`);for(let t of e.targets.targets)r.push(`  ${t.metric}：${t.value??`需醫療團隊定案`}`),r.push(`    依據：${t.reason}`),t.citation&&r.push(`    出處：${t.citation}`),t.needsClinicianConfirmation&&r.push(`    ⚠ 需醫療團隊確認後才可定案。`);r.push(``);let i=e.selection?.disagreements??[];if(e.targets.safetyFlags.length||i.length){r.push(`五、安全提示`);for(let t of e.targets.safetyFlags)r.push(`  [${t.severity}] ${t.message}`),t.citation&&r.push(`    出處：${t.citation}`);for(let e of i)r.push(`  [異議] ${e.topic}｜程式：${e.program_decision}`),r.push(`    LLM：${e.your_view}`);r.push(``)}return r.push(`門檻值來源：${Pe.size} 條規則，${P(Pe.get(`hba1c-general`)).split(`，`)[0]}。`),r.join(`
 `).trimEnd()}function Ge(e){let t=[`【程式已完成的主題判定（不可更改）】`];for(let n of e.decisions){let e=n.kind===`established`?`已納入・已發生`:n.kind===`prevention-active`?`已納入・積極照護`:n.kind===`status-unconfirmed`?`已納入・現況不明（R 缺值，未敘述為尚未發生）`:n.kind===`prevention-moderate`?`簡短提醒`:`未納入`;t.push(`${n.moduleId}（R${n.topic} ${n.topicName}）：${e}｜${n.reason}`)}t.push(``,`【程式已納入的自我照護模組】`);for(let n of e.selfCareModuleIds)t.push(`${n}：${e.selfCareReasons[n]??``}`);t.push(``,`【程式推導的個別化目標】`);for(let n of e.targets.targets)t.push(`${n.metric}：${n.value??`需醫療團隊定案`}（${n.reason}）`);if(e.targets.undetermined.length){t.push(``,`【資料不足無法判定】`);for(let n of e.targets.undetermined)t.push(`- ${n}`)}return t.join(`
 `)}function U(e){return{known:!0,value:e}}function W(e){return{known:!1,reason:e}}var Ke=/^E10/i,qe=/^E11/i,G=/^E1[234]/i;function K(e){if(e==null||e===``)return null;let t=Number(String(e).trim());return Number.isFinite(t)?t:null}function q(e){if(e==null)return null;let t=String(e).trim().replaceAll(`/`,`-`);return/^\d{4}-\d{2}-\d{2}$/.test(t)?t:null}function J(e,t){let n=Date.parse(`${e}T00:00:00Z`),r=Date.parse(`${t}T00:00:00Z`);return!Number.isFinite(n)||!Number.isFinite(r)?null:Math.round((r-n)/864e5)}function Y(e,t){let n=K(e);return n===null?W(`來源未提供 ${t} 欄位`):U(n===1)}function X(e,t){let n=[];for(let r=1;r<=7;r+=1){let i=`${t}${r}`,a=Object.hasOwn(e,i),o=a?e[i]:null;n.push({code:i,present:a,value:a?K(o):null,rawValue:a&&o!=null?String(o):null})}return n}function Je(e){let t=new Set,n=new Set,r=new Set;for(let i of e){if(!v(i))continue;let e=String(i.icd_code??``).trim();e&&(Ke.test(e)?t.add(e):qe.test(e)?n.add(e):G.test(e)&&r.add(e))}let i=[...t].sort(),a=[...n].sort(),o=[...r].sort();return i.length&&a.length?{verdict:`conflicting`,type1IcdCodes:i,type2IcdCodes:a,otherDiabetesIcdCodes:o,note:`申報資料同時出現第一型與第二型糖尿病診斷碼，無法據此判定類型；不得啟用任何 T1／T2 補充模組。`}:i.length?{verdict:`type1-confirmed`,type1IcdCodes:i,type2IcdCodes:[],otherDiabetesIcdCodes:o,note:`申報資料只出現第一型糖尿病診斷碼。注意申報診斷碼是計費用途，仍應由醫療團隊確認。`}:a.length?{verdict:`type2-confirmed`,type1IcdCodes:[],type2IcdCodes:a,otherDiabetesIcdCodes:o,note:`申報資料只出現第二型糖尿病診斷碼。注意申報診斷碼是計費用途，仍應由醫療團隊確認。`}:{verdict:`absent`,type1IcdCodes:[],type2IcdCodes:[],otherDiabetesIcdCodes:o,note:`申報用藥紀錄中沒有 E10／E11 糖尿病診斷碼，無法判定類型。`}}function Ye(e,t){let n=new Map,r=[];for(let t of e){if(!v(t))continue;let e=String(t.drug_atc5_name??``).trim()||`未分類或來源未提供分類`,i=String(t.drug_ename??``).trim(),a=q(t.drug_date);a&&r.push(a);let o=n.get(e)??{names:new Set,count:0,dates:[]};i&&o.names.add(i),o.count+=1,a&&o.dates.push(a),n.set(e,o)}let i=[...n.entries()].map(([e,n])=>{let r=[...n.dates].sort(),i=r.length?r[r.length-1]:null;return{atcClass:e,drugNames:[...n.names].sort().slice(0,8),recordCount:n.count,lastClaimDate:i,daysSinceLastClaim:i&&t?J(i,t):null}}).sort((e,t)=>e.lastClaimDate&&t.lastClaimDate&&e.lastClaimDate!==t.lastClaimDate?t.lastClaimDate.localeCompare(e.lastClaimDate):t.recordCount-e.recordCount),a=r.sort();return{classes:i,dateRange:a.length?U({earliest:a[0],latest:a[a.length-1]}):W(`用藥紀錄沒有可解析的日期`)}}function Xe(e){let t=new Map,n=!1;for(let r of e){if(!v(r))continue;(q(r.assay_date)||q(r.inspect_date))&&(n=!0);let e=String(r.assay_item_name??``).trim()||String(r.order_name??``).trim()||`未提供項目名稱`,i=String(r.assay_value??``).trim();if(!i)continue;let a=t.get(e)??{values:[],units:new Set,refs:new Set,months:new Set};a.values.push(i);let o=String(r.unit_data??``).trim();o&&o!==`null`&&a.units.add(o);let s=String(r.consult_value??``).trim();s&&s!==`null`&&a.refs.add(s);let c=String(r.fee_ym??``).trim();c&&a.months.add(c),t.set(e,a)}return{items:[...t.entries()].map(([e,t])=>({itemName:e,rawValues:t.values,unit:t.units.size===1?[...t.units][0]:t.units.size>1?[...t.units].join(` / `):null,referenceRange:t.refs.size?[...t.refs][0]:null,feeMonths:[...t.months].sort(),hasDrawDates:n})).sort((e,t)=>t.rawValues.length-e.rawValues.length),hasDrawDates:n}}function Ze(e){let t=v(e)?e:{},n=v(t.userInput)?t.userInput:{},r=v(t.rawSources)?t.rawSources:{},i=q(n.REPORT_DATE),a=q(n.BIRTHDAY),o=q(n.INDX_DATE),s=a&&i?J(a,i):null,c=K(n.T),l=S(r,`medication`),u=S(r,`labData`),{classes:d,dateRange:f}=Ye(l,i),{items:p,hasDrawDates:m}=Xe(u),ee=[];!m&&u.length&&ee.push(`檢驗紀錄只有費用年月、沒有採檢日期，因此無法建立時間順序或趨勢。任何「趨勢」「最近一次」的敘述都沒有資料支持。`),i||ee.push(`來源未提供 REPORT_DATE，無法標示資料截止日。`);let te=X(n,`R`),ne=X(n,`PR`),re=[...te,...ne].filter(e=>!e.present).map(e=>e.code);re.length&&ee.push(`來源未出現下列欄位，不得補值也不得視為 0：${re.join(`、`)}。`);let ie=Je(l);return ie.verdict===`conflicting`&&ee.push(ie.note),{reportDate:i?U(i):W(`來源未提供 REPORT_DATE`),dataCutoff:i?U(i):W(`來源未提供資料截止日`),birthday:a?U(a):W(`來源未提供 BIRTHDAY`),ageYears:s===null?W(`缺少出生日期或報告日期，無法計算年齡`):U(Math.floor(s/365.25)),sexCode:n.SEX!==void 0&&n.SEX!==null&&n.SEX!==``?U(String(n.SEX)):W(`來源未提供 SEX`),diabetesOnsetDate:o?U(o):W(`來源未提供 INDX_DATE`),diabetesDurationYears:c===null?W(`來源未提供 T`):U(Number(c.toFixed(1))),comorbidityFlags:{hypertension:Y(n.HT,`HT`),hyperlipidemia:Y(n.HL,`HL`),ckd:Y(n.CKD,`CKD`),p4p:Y(n.P4P,`P4P`)},dcsiTotal:K(n.DCSI)===null?W(`來源未提供 DCSI`):U(K(n.DCSI)),grade:n.GRADE===void 0?W(`來源未提供 GRADE`):U(String(n.GRADE)),ageGroup:n.AGEGP===void 0?W(`來源未提供 AGEGP`):U(String(n.AGEGP)),existingComplications:te,riskPredictions:ne,diabetesType:ie,medicationClasses:d,medicationRecordCount:l.length,medicationDateRange:f,labItems:p,labRecordCount:u.length,labHasDrawDates:m,dataQualityFlags:ee}}function Z(e,t){return e.known?t?t(e.value):String(e.value):`未知（${e.reason}）`}function Qe(e,t={}){let n=t.maxMedicationClasses??25,r=[];r.push(`【基本判斷依據】`),r.push(`報告日期：${Z(e.reportDate)}`),r.push(`年齡：${Z(e.ageYears,e=>`${e} 歲`)}`),r.push(`性別代碼：${Z(e.sexCode)}`),r.push(`糖尿病病程年數：${Z(e.diabetesDurationYears,e=>`${e} 年`)}`),r.push(`DCSI 總分：${Z(e.dcsiTotal)}`),r.push(`高血壓：${Z(e.comorbidityFlags.hypertension,e=>e?`是`:`否`)}`),r.push(`高血脂：${Z(e.comorbidityFlags.hyperlipidemia,e=>e?`是`:`否`)}`),r.push(`慢性腎臟病：${Z(e.comorbidityFlags.ckd,e=>e?`是`:`否`)}`),r.push(``,`【已發生併發症現況（R）】`);for(let t of e.existingComplications)r.push(`${t.code}：${t.present?`${t.rawValue}`:`來源未出現此欄位（不得視為 0）`}`);r.push(``,`【未來風險預測（PR）】`);for(let t of e.riskPredictions)r.push(`${t.code}：${t.present?`${t.rawValue}`:`來源未出現此欄位（不得視為 0）`}`);r.push(``,`【糖尿病類型證據】`),r.push(`判定：${e.diabetesType.verdict}`),r.push(`第一型診斷碼：${e.diabetesType.type1IcdCodes.join(`、`)||`無`}`),r.push(`第二型診斷碼：${e.diabetesType.type2IcdCodes.join(`、`)||`無`}`),r.push(`說明：${e.diabetesType.note}`),r.push(``,`【用藥申報分類（非目前用藥）】`),r.push(`共 ${e.medicationRecordCount} 筆申報紀錄，涵蓋 ${e.medicationClasses.length} 個 ATC 分類。以下為最近申報的前 ${Math.min(n,e.medicationClasses.length)} 類。`);for(let t of e.medicationClasses.slice(0,n)){let e=t.lastClaimDate?`最後申報 ${t.lastClaimDate}${t.daysSinceLastClaim===null?``:`（距報告日 ${t.daysSinceLastClaim} 天）`}`:`來源無日期`;r.push(`- ${t.atcClass}｜${t.recordCount} 筆｜${e}`)}if(r.push(``,`【檢驗資料可用性】`),r.push(`共 ${e.labRecordCount} 筆；是否有採檢日：${e.labHasDrawDates?`有`:`沒有，只有費用年月`}`),e.dataQualityFlags.length){r.push(``,`【資料限制】`);for(let t of e.dataQualityFlags)r.push(`- ${t}`)}return r.join(`
