@@ -1,0 +1,14 @@
+<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>隱私權政策｜北榮懷爾抓抓</title><style>body{max-width:860px;margin:40px auto;padding:0 24px;font:17px/1.8 system-ui,sans-serif;color:#243646;background:#f8fafb}h1,h2{color:#154b62}h2{margin-top:32px}p,li{overflow-wrap:anywhere}header{border-bottom:1px solid #ccdce3;padding-bottom:20px}a{color:#076b84}</style><header><h1>北榮懷爾抓抓 vghtpe-fhir-bridge 隱私權政策</h1><p>適用版本：0.14.2 起｜生效日期：2026-10-18</p></header><main><h2>用途與資料</h2>
+<p>協助已有院內登入及病歷調閱權限的使用者，取得目前北榮病人的資料，在瀏覽器轉換為 FHIR R4 並下載，另提供 RAW／HTML 下載與已配對擴充功能的急診／門診整合。工具不取代院方授權、稽核或正式病歷。</p>
+<p>依操作可能處理姓名、病歷號、身分識別、生日、性別、就診、診斷、SOAP、用藥、醫囑、檢驗／檢查、生命徵象及原始頁面。工作分頁 URL 與病人情境用於擷取、路由及避免跨病人處理。院內請求使用既有瀏覽器登入工作階段，可能附帶該來源 cookie；沒有 cookies API 權限不代表請求不使用認證 cookie。本版不提供 NIIS 預防接種查詢。</p>
+<h2>處理與傳送對象</h2>
+<ul><li>院內：向支援來源請求已授權資料；來源服務有自己的稽核及保存規則。</li><li>本機下載：FHIR／JSON 及 RAW／HTML 檔案存到使用者下載位置。RAW／HTML 不去識別化，可能保留完整敏感資料。 FHIR 去識別化為下載 Bundle 的選用設定，不保證匿名，也不套用到已配對的急診／門診資料交付。</li><li>已配對的雲端懷爾抓抓：啟用相關急診／門診流程時，向已配對 extension 傳遞所需病人情境、狀態與院內結果。對端取得資料後的處理需一併查閱其政策。因此不能宣稱所有資料都不離開裝置。</li><li>手動 MediPrisma：本版只依使用者操作開啟網站，不自動傳送病歷或匯入 Bundle。若使用者另在網站手動上傳或操作，依該網站政策處理。</li></ul>
+<p>本版已移除 backend、frontend、Docker、upload 及自動交接功能，不透過原後端上傳流程送出病歷。此變更不撤回舊版已送出的資料，也不代表來源網站或配對對端停止其獨立資料處理。</p>
+<h2>本機儲存、保存與刪除</h2>
+<p>Chrome 的 storage.local 保存配對 ID、本機去識別化金鑰、目前工作狀態與最多 20 筆歷史摘要；介面顯示最近 5 筆。摘要可能含病歷號、錯誤、時間、檔名及下載交付狀態，不能稱完全匿名，也沒有以天數自動到期的承諾。一般的範圍、門診版與去識別化選項存於 storage.sync，可能隨使用者的 Chrome 同步設定傳送。啟動新版背景工作或載入設定時，刪除舊版留在 local／sync 的 NIIS token，不讀取或遷移其值。設定頁也清除已淘汰的後端網址、API key 與上傳模式設定。</p>
+<p>關閉或移除 extension 不會刪除既有下載檔、系統／瀏覽器備份、院內稽核或對端已收到的資料。取消只阻止尚未啟動的後續動作，無法撤回已啟動下載或已交付 peer 的內容。本版配對設定未提供清空選項。需要停止後續讀取及配對時，可在 Chrome 停用擴充功能。這些操作不會刪除既有下載或對端資料。Chrome 儲存不是本工具另行提供的加密保管箱，請保護裝置、profile 與下載目錄。</p>
+<p>如需查閱、更正或刪除來源／對端資料，請依相應管理者流程處理。支援請求不得附未授權病歷、cookie、token、金鑰或 RAW 檔案。</p>
+<h2>資料用途與聯絡方式</h2>
+<p>資料僅用於本政策所述的病歷取得、FHIR 轉換、本機下載與明確配對功能。除經核准的用途外，不將使用者資料販售或轉移給第三方；不基於與產品單一用途無關的目的使用或轉移資料；不將資料用於信用評等或貸款。</p>
+<p>發布者：北榮懷爾抓抓 vghtpe-fhir-bridge 專案（GitHub：voho0000）。隱私與支援聯絡：https://github.com/voho0000/voho0000.github.io/issues 。請勿在公開 issue 提供病歷、RAW 檔案、cookie、憑證或可識別病人的資料。資料流變更時會同步更新政策與商店揭露。<br></p>
+</main><footer><p>聯絡與支援：<a href="https://github.com/voho0000/voho0000.github.io/issues">GitHub Issues</a></p></footer></html>
