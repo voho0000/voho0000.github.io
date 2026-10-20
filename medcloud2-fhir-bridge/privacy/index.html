@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>隱私權政策｜雲端懷爾抓抓 medcloud2-fhir-bridge</title>
+    <title>隱私權政策｜雲端懷爾抓抓 medicloud2-fhir-bridge</title>
     <meta
       name="description"
       content="雲端懷爾抓抓（medcloud2-fhir-bridge）Chrome 擴充功能隱私權政策。"
@@ -147,198 +147,164 @@
   <body>
     <header>
       <div class="header-inner">
-        <div class="eyebrow">雲端懷爾抓抓 · medcloud2-fhir-bridge</div>
+        <div class="eyebrow">雲端懷爾抓抓 · medicloud2-fhir-bridge</div>
         <h1>隱私權政策 Privacy Policy</h1>
         <p class="subtitle">Chrome 擴充功能的資料處理、保存與使用者選擇</p>
         <div class="meta">
-          <span>最後更新：2026-08-01</span>
+          <span>最後更新：2026-10-20</span>
           <span>生效日期：2026-07-31</span>
-          <span>版本：0.2.6</span>
+          <span>版本：0.15.4</span>
         </div>
       </div>
     </header>
 
-    <main>
-      <nav aria-label="頁面語言與文件導覽">
-        <a href="#zh">繁體中文</a>
-        <a href="#en">English</a>
-        <a href="../">文件首頁</a>
-      </nav>
-
-      <article id="zh">
-        <h2>1. 適用範圍與單一用途</h2>
-        <p>
-          本政策適用於 Chrome 擴充功能「雲端懷爾抓抓（medcloud2-fhir-bridge）」。本擴充功能的單一用途，是協助依法且已獲授權的醫事人員，在健保醫療資訊雲端查詢系統（MediCloud）目前病人的情境中取得臨床參考資料，於使用者瀏覽器內轉換為 HL7 FHIR R4 Bundle，並由使用者下載或交給 MediPrisma 的瀏覽器本機匯入流程。
-        </p>
-        <div class="notice">
-          本擴充功能不是由衛生福利部中央健康保險署製作、授權或背書，也不會繞過或取代 MediCloud 的機構、醫事人員、讀卡、病人或其他驗證。
-        </div>
-
-        <h2>2. 本擴充功能處理的資料</h2>
-        <p>在使用者明確啟動功能，且 MediCloud 已顯示目前病人時，本擴充功能依所需步驟處理：</p>
-        <ul>
-          <li><strong>個人識別資料：</strong>姓名、身分證字號、出生日期、性別，以及用於防止病人混淆的病人 context hash。extension 病人 context 與 FHIR 識別碼使用遮罩值；原始 API 回應可能仍含直接識別。</li>
-          <li><strong>健康與醫療資料：</strong>就醫、用藥、檢驗、檢查、影像／病理文字報告、牙科、出院病摘、復健、餘藥、成人預防保健、癌症篩檢及相關臨床參考資料。</li>
-          <li><strong>驗證資訊：</strong>擷取期間，在 MediCloud 頁面函式的短效記憶體 closure 中短暫觀察並使用既有 Bearer authorization，只向同一個 MediCloud 來源提出必要請求。</li>
-          <li><strong>網站內容：</strong>辨識目前病人所需的 MediCloud 頁面內容，以及使用者啟動後取得的同來源 API 回應。</li>
-          <li><strong>操作設定與技術狀態：</strong>去識別化偏好、工作識別碼、時間、大小、資源筆數、遮罩檔名、分頁識別碼、狀態與不含原始病歷內容的錯誤代碼。</li>
-        </ul>
-        <p>本擴充功能不蒐集一般瀏覽紀錄、位置、付款資料、個人通訊、廣告識別碼、分析事件或跨網站追蹤資料。</p>
-
-        <h2>3. 使用目的</h2>
-        <p>上述資料只用於：</p>
-        <ol>
-          <li>確認使用者目前操作的 MediCloud 病人。</li>
-          <li>取得使用者在該工作階段有權查看的臨床參考資料。</li>
-          <li>進行 schema、完整性、病人隔離與 FHIR reference 檢查。</li>
-          <li>在瀏覽器內轉換為 FHIR R4 Bundle。</li>
-          <li>依使用者選擇下載 FHIR JSON、下載原始回應，或交給 MediPrisma 的本機匯入流程。</li>
-          <li>顯示工作進度、錯誤與結果，並在期限到達時清除暫存。</li>
-        </ol>
-        <p>資料不會用於廣告、行銷、資料仲介、信用評估、放款、建立使用者側寫，或與上述單一用途無關的模型訓練。</p>
-
-        <h2>4. 資料來源與流向</h2>
-        <h3>MediCloud</h3>
-        <p>
-          資料來源為使用者已登入且有權查看的 <code>https://medcloud2.nhi.gov.tw</code>。驗證資訊不會回傳給 extension 背景程式、寫入 storage、放進下載檔、由 extension 記錄，或傳給 MediPrisma／發布者。MediCloud 可能依其規範保存使用者的查詢紀錄；該紀錄由 MediCloud／健保署管理，不提供給本 extension 發布者。
-        </p>
-
-        <h3>使用者下載</h3>
-        <ul>
-          <li><strong>FHIR JSON：</strong>依使用者的去識別化設定產生，但仍可能包含敏感個人或健康資料。</li>
-          <li><strong>RAW DATA：</strong>未轉換的來源回應，不套用 FHIR 去識別化設定，可能包含直接識別與完整臨床內容。</li>
-        </ul>
-        <p>檔案下載後的保存、傳輸與刪除，由使用者及其所屬機構負責。</p>
-
-        <h3>MediPrisma</h3>
-        <p>
-          使用者選擇 MediPrisma 時，本擴充功能會開啟或重用 <a href="https://mediprisma.tw/app/">https://mediprisma.tw/app/</a>，把該次 FHIR Bundle 一次性交給該頁的瀏覽器本機檔案匯入元件。Bundle 不放入網址、查詢參數、hash、頁面 global 或可見 DOM 文字。若使用者之後在 MediPrisma 啟用 AI 或其他雲端功能，後續處理不再由本擴充功能控制，應以 MediPrisma 當時顯示的揭露與使用者所屬機構規範為準。
-        </p>
-
-        <h3>發布者與其他第三方</h3>
-        <p>
-          本擴充功能沒有發布者後端、分析工具、遙測、錯誤回報服務、廣告 SDK、追蹤像素或遠端程式碼。發布者不會透過本擴充功能接收病人資料、FHIR Bundle、RAW DATA、Bearer authorization 或使用紀錄。
-        </p>
-
-        <h2>5. 本機儲存與保存期間</h2>
-        <ul>
-          <li>原始 MediCloud 回應只在執行記憶體處理；FHIR 轉換完成或 RAW 下載流程結束後不由 extension 保存。</li>
-          <li>Bearer authorization 只存在 MediCloud 頁面擷取函式的短效記憶體 closure，函式結束後即不再保留。</li>
-          <li>完成的 FHIR Bundle 可暫存在僅限 trusted extension contexts 的 <code>chrome.storage.session</code>，大小上限 8 MiB、最長一小時。</li>
-          <li>下載或 MediPrisma 匯入不會立即清除 Bundle；使用者明確移除、新工作／病人切換取代、到期或瀏覽器工作階段結束時清除，以先發生者為準。</li>
-          <li>去識別化偏好可保存在 extension 自己的 <code>localStorage</code>，直到使用者更改、清除瀏覽器資料或移除 extension；此偏好不含病歷內容。</li>
-        </ul>
-        <p>本擴充功能不使用 <code>chrome.storage.sync</code>，不把資料同步到使用者的 Google 帳號。</p>
-
-        <h2>6. 安全措施</h2>
-        <ul>
-          <li>權限只限 <code>medcloud2.nhi.gov.tw</code> 與 <code>mediprisma.tw</code>，不要求所有網站權限。</li>
-          <li>跨網站連線使用 HTTPS，並在開始前、擷取中及完成後驗證病人情境。</li>
-          <li>驗證資訊不離開 MediCloud 頁面擷取函式。</li>
-          <li>FHIR 暫存限制大小、期限與可讀取的 extension context。</li>
-          <li>不將健康資料放入 URL、log、分析事件或 runtime completion message。</li>
-          <li>不下載或執行遠端程式碼。</li>
-        </ul>
-        <p>沒有任何安全措施能保證零風險。使用者不得在未受控的共用電腦上處理病人資料，並應依所屬機構政策保護下載檔。</p>
-
-        <h2>7. 使用者選擇與刪除</h2>
-        <ul>
-          <li>使用者可以不啟動擷取、不使用 MediPrisma，或不下載檔案。</li>
-          <li>extension 暫存可由使用者明確移除，或於新工作／病人切換、最長一小時到期、瀏覽器工作階段結束或移除 extension 時清除。</li>
-          <li>已下載檔案由使用者在作業系統中刪除；發布者無法存取或代為刪除。</li>
-          <li>發布者不接收個別使用者或病人的資料，因此通常沒有可供查詢、更正或刪除的伺服器端紀錄。</li>
-        </ul>
-
-        <h2>8. 兒童、臨床與法律限制</h2>
-        <p>
-          本擴充功能不是直接提供給兒童的一般消費者服務。具權限醫事人員可能依法在診療情境中處理未成年病人的資料，該處理仍受相同用途限制、安全措施、機構政策與適用法律規範。
-        </p>
-        <p>
-          MediCloud 資料與本擴充功能輸出均供臨床參考，不是診斷、治療建議或院內正式病歷。使用者應以官方來源、專業判斷及所屬機構的確認、簽章與病歷保存流程為準。
-        </p>
-
-        <h2>9. Chrome Web Store Limited Use</h2>
-        <p>
-          本擴充功能對使用者資料的使用遵守 Chrome Web Store User Data Policy，包括 Limited Use 要求。資料只用於提供或改善已揭露的單一用途；除政策允許且必要的情形外，不移轉、出售或供人員讀取，也不用於個人化廣告、資料仲介或信用評估。
-        </p>
-        <p lang="en"><strong>The use of information received by this extension will adhere to the Chrome Web Store User Data Policy, including the Limited Use requirements.</strong></p>
-
-        <h2>10. 政策變更與聯絡方式</h2>
-        <p>如資料類別、用途、分享對象、保存方式或權限有實質變更，發布者會在變更生效前更新本頁，並透過商店頁、extension 介面或其他適當方式醒目通知使用者並取得必要同意。</p>
-        <ul>
-          <li>發布者：medcloud2-fhir-bridge 專案（GitHub：voho0000）</li>
-          <li>隱私與支援聯絡：<a href="https://github.com/voho0000/voho0000.github.io/issues/new">GitHub Issues</a></li>
-        </ul>
-        <div class="warning">
-          請勿在公開 issue、一般電子郵件或截圖中傳送真實姓名、身分證字號、生日、病歷、FHIR Bundle、RAW DATA、登入憑證或 token。
-        </div>
-      </article>
-
-      <article id="en" class="english" lang="en">
-        <h2>English Privacy Policy</h2>
-
-        <h3>1. Scope and single purpose</h3>
-        <p>
-          This policy applies to the Chrome extension medcloud2-fhir-bridge (雲端懷爾抓抓). Its single purpose is to help an authorized healthcare professional obtain clinical reference data for the patient currently displayed in Taiwan NHI MediCloud, convert that data locally in the user's browser into an HL7 FHIR R4 Bundle, and let the user download it or hand it to MediPrisma's browser-local import flow.
-        </p>
-        <p>The extension is not produced, authorized, or endorsed by Taiwan's National Health Insurance Administration and does not bypass MediCloud authentication or access controls.</p>
-
-        <h3>2. Data handled</h3>
-        <p>After an explicit user action, the extension handles:</p>
-        <ul>
-          <li><strong>Identifiers:</strong> name, national ID, date of birth, sex, and a patient-context hash used to prevent patient mixing. The extension context and FHIR identifier use a masked value, while raw API responses may still contain direct identifiers.</li>
-          <li><strong>Health information:</strong> encounters, medications, laboratory and examination records, reports, dental procedures, discharge summaries, rehabilitation, remaining medication days, preventive care, cancer screening, and related clinical reference data.</li>
-          <li><strong>Authentication information:</strong> the existing MediCloud Bearer authorization is briefly observed and used inside a page-function memory closure only for necessary same-origin requests.</li>
-          <li><strong>Website content:</strong> the minimum current-patient page content and same-origin API responses required for the requested feature.</li>
-          <li><strong>Local preferences and job metadata:</strong> de-identification preference, job IDs, timestamps, sizes, resource counts, masked filenames, tab IDs, status, and non-clinical error codes.</li>
-        </ul>
-        <p>The extension does not collect general browsing history, location, payment data, personal communications, advertising identifiers, analytics events, or cross-site tracking data.</p>
-
-        <h3>3. Use and sharing</h3>
-        <p>
-          Data is used only to verify the current patient, retrieve authorized MediCloud data, perform safety and FHIR validation, convert it to FHIR R4, display progress, remove expired results, and complete the user's selected download or MediPrisma import. It is not used for advertising, marketing, data brokerage, creditworthiness, lending, user profiling, or unrelated model training.
-        </p>
-        <p>
-          The publisher does not receive patient data, Bundles, raw responses, authorization values, or telemetry. The extension contains no publisher backend, analytics, advertising, tracking, error-reporting SDK, or remote code. MediCloud may retain the authorized user's query logs under its own policies; those logs are controlled by MediCloud/NHIA and are not provided to the extension publisher.
-        </p>
-        <p>
-          When the user chooses MediPrisma, the extension passes the Bundle once to the browser-local file-import control at <a href="https://mediprisma.tw/app/">https://mediprisma.tw/app/</a>. The Bundle is not placed in a URL, query string, hash, page global, or visible DOM text. Any later use of an optional cloud or AI feature in MediPrisma is outside this extension's control and is subject to the disclosure shown by MediPrisma at that time and the user's organizational rules.
-        </p>
-
-        <h3>4. Local retention</h3>
-        <p>
-          Raw responses and authentication information remain only in short-lived execution memory. A completed FHIR Bundle may be staged in trusted-context-only <code>chrome.storage.session</code>, capped at 8 MiB and one hour. Download and confirmed MediPrisma import do not consume it; explicit user removal, replacement by a new job or patient switch, expiry, or browser-session end clears it. The extension does not use <code>chrome.storage.sync</code>.
-        </p>
-        <p>Downloaded files are controlled by the user and their organization. The publisher cannot access or delete them.</p>
-
-        <h3>5. Security and user choices</h3>
-        <p>
-          The extension uses exact host permissions, HTTPS, repeated patient-context checks, short-lived state, restricted session storage, packaged code only, and a narrow MediPrisma handoff context. Users may choose not to start capture, not to use MediPrisma, not to download a file, or to remove the extension.
-        </p>
-
-        <h3>6. Children and clinical limitation</h3>
-        <p>
-          The extension is not a general consumer service directed to children. Authorized healthcare professionals may handle a minor patient's data in a lawful clinical context, subject to the same purpose limitations, safeguards, organizational policies, and applicable law.
-        </p>
-        <p>
-          MediCloud data and the extension's output are clinical reference information, not a diagnosis, treatment recommendation, or official medical record. Users must follow authoritative sources, professional judgment, and their organization's approval, confirmation, signature, and retention processes.
-        </p>
-
-        <h3>7. Limited Use</h3>
-        <p><strong>The use of information received by this extension will adhere to the Chrome Web Store User Data Policy, including the Limited Use requirements.</strong></p>
-        <p>User data is used only for the disclosed single purpose and is not sold, used for personalized advertising, provided to data brokers, or used for creditworthiness or lending.</p>
-
-        <h3>8. Changes and contact</h3>
-        <p>Material changes to data handling will be prominently disclosed before they take effect, with additional consent where required. They will not be disclosed only by silently editing this policy.</p>
-        <ul>
-          <li>Publisher: medcloud2-fhir-bridge project (GitHub: voho0000)</li>
-          <li>Privacy and support contact: <a href="https://github.com/voho0000/voho0000.github.io/issues/new">GitHub Issues</a></li>
-        </ul>
-        <div class="warning">
-          Never submit real patient records, full identifiers, FHIR Bundles, raw data, credentials, tokens, or unredacted screenshots through a public issue.
-        </div>
-      </article>
-    </main>
+    <main><nav aria-label="頁面語言與文件導覽"><a href="#zh">繁體中文</a><a href="#en">English</a></nav><article id="zh"><p>最後更新：2026-10-20</p>
+<p>對應版本：0.15.4</p>
+<p>生效日期：2026-07-31</p>
+<p>發布者：medcloud2-fhir-bridge 專案（GitHub：voho0000）</p>
+<p>隱私與支援聯絡：<a href="https://github.com/voho0000/voho0000.github.io/issues/new" target="_blank" rel="noopener noreferrer" class="">https://github.com/voho0000/voho0000.github.io/issues/new</a></p>
+<p>公開政策網址：<a href="https://mediprisma.tw/medcloud2-fhir-bridge/privacy/" target="_blank" rel="noopener noreferrer" class="">https://mediprisma.tw/medcloud2-fhir-bridge/privacy/</a></p>
+<p>GitHub 備援：<a href="https://voho0000.github.io/medcloud2-fhir-bridge/privacy/" target="_blank" rel="noopener noreferrer" class="">https://voho0000.github.io/medcloud2-fhir-bridge/privacy/</a></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="1-適用範圍">1. 適用範圍</h2>
+<p>本政策適用於 Chrome 擴充功能「雲端懷爾抓抓（medicloud2-fhir-bridge）」（以下稱「本擴充功能」）。本擴充功能協助依法且已獲授權的醫事人員，在健保醫療資訊雲端查詢系統（MediCloud）目前病人的情境中，取得臨床參考資料、於使用者瀏覽器內轉換為 HL7 FHIR R4 Bundle，並由使用者下載或交給 MediPrisma 的本機匯入流程。</p>
+<p>本擴充功能不是由衛生福利部中央健康保險署製作、授權或背書，也不會繞過或取代 MediCloud 的機構、醫事人員、讀卡、病人或其他驗證。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="2-本擴充功能處理的資料">2. 本擴充功能處理的資料</h2>
+<p>本擴充功能不另外顯示首次同意彈窗或增加確認按鈕。使用者開啟工具列 popup 時，程式會確認 MediCloud 目前顯示的病人，以呈現可操作狀態；使用者點擊「取得雲端病歷資料」、「下載原始資料」、MediCloud 頁面 Logo，或以明確的 WinForms control URL 啟動流程後，才依所選功能取得臨床內容、轉換、下載或交給 MediPrisma。相關資料處理方式統一記載於本政策：</p>
+<ul>
+<li class="">個人識別資料：姓名、身分證字號／居留證或其他雲端病歷病人證號（去識別化預設關閉；啟用時，畫面與 FHIR 證號使用遮罩值；關閉時保留健保頁面提供的姓名、證號與完整生日，不再額外遮罩；下載檔名仍使用遮罩證號；原始 API 回應可能仍含直接識別）、出生日期、性別，以及用於防止病人混淆、由隨機 session key 計算的 HMAC-SHA-256 patient context。該值仍視為 pseudonymous PHI，不是匿名資料。</li>
+<li class="">健康與醫療資料：就醫、用藥、檢驗、檢查、影像／病理文字報告、牙科處置、過敏、手術、特材紀錄、出院病摘、復健、餘藥、成人預防保健、癌症篩檢及相關臨床參考資料；特材紀錄包含名稱、代碼、許可證、型號／規格、診療部位、數量及來源申報資訊。使用者啟用即時影像調閱時，FHIR 可能包含調閱所需的來源識別描述，但不包含新簽發的短效 Viewer URL。</li>
+<li class="">驗證資訊：頁面載入起，程式會在 MediCloud 頁面的記憶體 closure 中觀察既有同來源 API 授權請求；只保留可綁定目前病人的授權最多 30 分鐘，於使用者啟動取得時使用，僅向同一個 <code>https://medcloud2.nhi.gov.tw</code> 來源提出必要請求。</li>
+<li class="">網站內容：MediCloud 目前病人頁面中辨識病人情境所需的內容，以及使用者啟動後取得的同來源 API 回應。</li>
+<li class="">操作設定與技術狀態：去識別化偏好、整合偏好、可信來源識別、經驗證的 MediPrisma 目的地、工作識別碼、執行狀態、時間、資料大小、資源筆數、遮罩檔名、分頁識別碼與不含原始病歷內容的錯誤代碼。</li>
+</ul>
+<p>本擴充功能不蒐集或建立一般瀏覽紀錄、位置、付款資料、個人通訊、廣告識別碼、分析事件或跨網站追蹤資料。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="3-使用目的">3. 使用目的</h2>
+<p>上述資料只用於本擴充功能揭露的單一用途：</p>
+<ol>
+<li class="">確認使用者目前操作的 MediCloud 病人。</li>
+<li class="">取得使用者在該工作階段有權查看的臨床參考資料。</li>
+<li class="">進行 schema、完整性、病人隔離與 FHIR reference 檢查。</li>
+<li class="">在瀏覽器內轉換為 FHIR R4 Bundle。</li>
+<li class="">依使用者選擇下載 FHIR JSON、下載原始回應，或交給 MediPrisma 的本機匯入流程。</li>
+<li class="">顯示工作進度、錯誤與結果，並在期限到達時清除暫存。</li>
+</ol>
+<p>資料不會用於廣告、行銷、資料仲介、信用評估、放款、建立使用者側寫或與上述單一用途無關的模型訓練。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="4-資料來源與流向">4. 資料來源與流向</h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="41-medicloud">4.1 MediCloud</h3>
+<p>急診網址捷徑入口會在擴充功能內以 JavaScript 對話框詢問本次授權查詢病人的證號與民國七碼生日。取消或格式不合法時不啟動。資料以內部訊息送至背景程式，不放入網址、不在輸入頁保存，也不傳給發布者；後續使用相同的官方急診登入、預填查詢、病人核對與短效記憶體流程。手填生日標記為使用者輸入來源，不宣稱由 HIS 提供或由健保驗證；此入口不設定院所路由標記。輸出生日仍遵循既有去識別設定。</p>
+<p>使用者啟用經授權的臨床資料補充時，本擴充功能可將本次查詢所需的姓名、可辨識證號、生日與短效工作識別傳至使用者設定且通過來源驗證的本機資料提供端，以核對同一病人並取得獲准調閱的 SOAP、診斷、用藥、醫囑及報告。補充資料經核對後併入同一份 FHIR 結果，沿用相同加密暫存、保存期限與清除規則；不交換來源系統的登入 cookie。啟用去識別化時，不擷取尚無相同遮罩保證的補充原文。無法核對或取得補充資料時，保留可用的雲端結果並說明原因。個資不放入啟動網址、不記錄於 console，也不傳給發布者。</p>
+<p>雲端資料來源為使用者已登入且有權查看的 <code>https://medcloud2.nhi.gov.tw</code>。驗證資訊只用來向同一來源提出本次必要請求；不會回傳給 extension 背景程式、不會寫入 storage、不會放進下載檔、不會由 extension 記錄，也不會傳給 MediPrisma 或發布者。API 請求包含 MediCloud 的存取紀錄參數；MediCloud 可能依其規範記錄使用者的查詢，該紀錄由 MediCloud／健保署管理，不會提供給本 extension 發布者。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="42-使用者下載">4.2 使用者下載</h3>
+<p>使用者可以主動下載：</p>
+<ul>
+<li class="">FHIR JSON：依使用者的去識別化設定產生；仍可能包含敏感個人或健康資料及健保影像即時調閱描述。短效 Viewer URL 只用於立即開啟通過 HTTPS <code>nhi.gov.tw</code>／<code>*.nhi.gov.tw</code> 驗證的分頁，不寫入 JSON。</li>
+<li class="">RAW DATA：未轉換的來源回應，不套用 FHIR 去識別化設定，可能包含直接識別與完整臨床內容。</li>
+</ul>
+<p>檔案建立後由瀏覽器交給使用者裝置的下載功能；下載後的保存、傳輸與刪除由使用者及其所屬機構負責。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="43-mediprisma">4.3 MediPrisma</h3>
+<p>使用者選擇或點擊「取得病歷並送到 MediPrisma」時，本擴充功能會依使用者設定開啟允許的 <code>https://mediprisma.tw/app/</code> 或 <code>https://mediprisma.tw/app-hmc/</code> 工作區分頁，並將該次 FHIR Bundle 交給該頁的本機檔案匯入元件。Bundle 只包含穩定的健保影像即時調閱描述，不包含短效 Viewer URL。使用者之後點擊影像動作時，Bridge 才向同一位病人的 MediCloud 工作階段取得新 URL，驗證 HTTPS、無 credentials／自訂 port 及 <code>nhi.gov.tw</code> DNS 網域邊界後立即開啟；URL 不回傳 MediPrisma、不寫入 FHIR 或 storage。Bundle 本身不放入交接頁網址、查詢參數、hash、頁面 global 或可見 DOM 文字。MediPrisma 確認匯入後，本擴充功能仍會在既有期限內保留暫存副本，方便再次查看或下載。</p>
+<p>MediPrisma 是接收資料的獨立應用介面。匯入後使用者若在 MediPrisma 啟用 AI 或其他雲端功能，後續處理不再由本擴充功能控制，應以 MediPrisma 當時顯示的揭露、使用者選擇與所屬機構規範為準。</p>
+<p>醫析的本機資料比對功能可按需請求同次原始回應。擴充功能僅接受允許的醫析頁面以目前匯入的 Bundle ID 請求，確認原健保分頁仍為同一病人後，將 IndexedDB 暫存解密並分段傳回發出請求的文件。原始回應不套用 FHIR 去識別化，可能含直接識別資料；不得將讀取等同於同意上傳錯誤回報。讀取不會重新擷取、不會展延原一小時期限，本擴充功能不自動上傳原始回應或錯誤回報。醫析接收後的本機比對及使用者選擇的回報流程，依醫析當時顯示的內容與選擇處理。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="44-發布者與其他第三方">4.4 發布者與其他第三方</h3>
+<p>本擴充功能沒有發布者後端、分析工具、遙測、錯誤回報服務、廣告 SDK、追蹤像素或遠端程式碼。發布者不會透過本擴充功能接收病人資料、FHIR Bundle、RAW DATA、Bearer authorization 或使用紀錄。</p>
+<p>除前述使用者主動啟用的臨床資料取得、MediPrisma 匯入與本機比對、依法必須配合、處理安全事件，或取得使用者對特定資料的明確同意外，本擴充功能不向第三方提供資料。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="5-本機儲存與保存期間">5. 本機儲存與保存期間</h2>
+<ul>
+<li class="">原始 MediCloud 回應：擷取期間只在執行記憶體中處理。「取得雲端病歷資料」成功後，該次擷取的原始回應會與 FHIR Bundle 一起以 gzip 壓縮及 AES-256-GCM 加密存於同一筆 IndexedDB 記錄，使「下載原始資料」不需重新讀取雲端病歷；其 runId、病人 context、保存期限與清除時點與 Bundle 完全相同（見下方「Bundle 清除時點」）。輸出前會即時再確認 MediCloud 目前顯示的病人，不符時一律清除暫存且不產生檔案。使用者未先執行轉換而直接點選「下載原始資料」時，該次擷取只在記憶體中處理，下載後不保存。</li>
+<li class="">轉換失敗時的原始回應：若已取得來源回應且再次核對為同一病人，可將該次原始回應壓縮加密後暫存，供使用者下載排查；最長一小時，並沿用相同病人綁定及清除規則。取消工作或病人核對失敗時不保留。</li>
+<li class="">Bearer authorization：只存在 MediCloud 頁面的記憶體 closure，最多 30 分鐘或更早的已知到期時間；病人切換、換卡／登出、頁面離開或擷取授權遭拒後失效。病人標頭尚不可辨識時不保存該次觀察到的授權。</li>
+<li class="">待處理 FHIR Bundle：gzip 壓縮及 AES-256-GCM 加密後存於擴充功能專用 IndexedDB，使用 <code>unlimitedStorage</code> 支援大型 Bundle，最長 1 小時；<code>chrome.storage.session</code> 保存工作狀態與短效解密金鑰；IndexedDB 無法使用時，可另保留最多 3 MiB 的加密結果作為 session 備援，沿用相同病人綁定、到期及清除規則。原始回應過大時可不保留，但不截斷主要結果。</li>
+<li class="">Bundle 清除時點：新工作／病人切換取代、到期、使用者明確清除、擴充功能更新，或瀏覽器工作階段結束後下次啟動清理，以先發生者為準；下載與 MediPrisma 匯入不會清除暫存副本。同一筆記錄內保留的原始回應一併清除，不會單獨留存。</li>
+<li class="">工作狀態：工作識別碼、病人 context hash、遮罩檔名、時間、摘要、分頁識別碼與錯誤狀態可在同一瀏覽器工作階段內保留，以便恢復進度或顯示結果；下一次工作、清除或 session 結束時移除。</li>
+<li class="">本機偏好：去識別化、整合偏好、可信來源識別及經驗證的 MediPrisma 目的地保存在 <code>chrome.storage.local</code>，直到使用者更改、清除擴充功能資料或移除本擴充功能。升級時可讀取舊版 <code>localStorage</code> 的去識別化偏好進行遷移；遷移或讀取失敗時保留遮罩。這些設定不含病歷內容，也不存入同步儲存。</li>
+<li class="">本擴充功能不建立或保存 persistent consent record；v0.5.6 起，啟動時會刪除舊版留下的兩欄同意紀錄。除這次相容性清理外，不使用 <code>chrome.storage.local</code> 或 <code>chrome.storage.sync</code> 保存病人、健康或同意資料；資料不會同步到使用者的 Google 帳號。</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="6-安全措施">6. 安全措施</h2>
+<p>本擴充功能採取下列措施：</p>
+<ul>
+<li class="">權限只限 <code>medcloud2.nhi.gov.tw</code> 與 <code>mediprisma.tw</code>，不要求 <code>&lt;all_urls&gt;</code>。</li>
+<li class="">所有跨網站連線均使用 HTTPS。</li>
+<li class="">開始前、擷取中及完成後驗證病人情境；偵測到切換病人即停止並作廢結果。</li>
+<li class="">驗證資訊不離開 MediCloud 頁面記憶體閉包。</li>
+<li class="">FHIR 暫存限制大小、期限與可讀取的 extension context。</li>
+<li class="">MediPrisma 交接只接受允許的 HTTPS 工作區、同一接收文件與同一工作；每次資料出口前重新確認目前 MediCloud 病人。</li>
+<li class="">現行 private/internal build 的固定預加密 MediPrisma credential 仍有 replay 風險，不符合正式上線標準。正式版必須先撤銷底層 credential，改成綁定 user/session/audience/challenge/expiry 且有 replay protection 的 server-minted single-use token。</li>
+<li class="">不將臨床內容、病人識別或登入授權放入交接網址、log、分析事件或工作完成通知。影像短效網址只供核對後立即開啟，不寫入 FHIR 或暫存。</li>
+<li class="">不下載或執行遠端程式碼。</li>
+</ul>
+<p>沒有任何安全措施能保證零風險。使用者不得在未受控的共用電腦上處理病人資料，並應依所屬機構政策保護下載檔。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="7-使用者選擇查詢與刪除">7. 使用者選擇、查詢與刪除</h2>
+<ul>
+<li class="">不啟動功能：本擴充功能不會擷取臨床內容。</li>
+<li class="">不使用 MediPrisma：可選擇只下載 FHIR JSON；若不希望產生檔案，可不下載並等待暫存到期。</li>
+<li class="">清除 extension 暫存：使用者按下明確移除、新工作／病人切換取代、最長一小時到期、關閉瀏覽器工作階段，或移除 extension；完成下載或 MediPrisma 交接不會立即清除，方便再次操作。暫存的 FHIR Bundle 與同一次擷取保留的原始回應存於同一筆記錄，上述任一時點都會一併清除，不會只留下其中一項。</li>
+<li class="">刪除已下載檔案：由使用者在作業系統中刪除；發布者無法存取或代為刪除。</li>
+<li class="">查詢發布者持有的資料：發布者不透過本擴充功能接收個別使用者或病人的資料，因此通常沒有可供查詢、更正或刪除的伺服器端紀錄。</li>
+</ul>
+<p>如需支援，請勿透過一般電子郵件、公開 issue 或截圖傳送真實病人資料、完整身分證字號、病歷內容、登入憑證或 token。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="8-兒童資料">8. 兒童資料</h2>
+<p>本擴充功能不是直接提供給兒童的一般消費者服務。具權限醫事人員可能依法在診療情境中處理未成年病人的資料；該處理仍受相同的用途限制、安全措施、機構政策與適用法律規範。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="9-臨床與法律限制">9. 臨床與法律限制</h2>
+<p>MediCloud 資料與本擴充功能輸出均供臨床參考。本擴充功能不提供診斷或治療建議，也不會使來源資料自動成為院內正式病歷。使用者應以官方來源、專業判斷及所屬機構的確認、簽章與病歷保存流程為準。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="10-chrome-web-store-limited-use">10. Chrome Web Store Limited Use</h2>
+<p>本擴充功能對使用者資料的使用遵守 Chrome Web Store User Data Policy，包括 Limited Use 要求。資料只用於提供或改善已揭露的單一用途；除政策允許且必要的情形外，不移轉、出售或供人員讀取，也不用於個人化廣告、資料仲介或信用評估。</p>
+<p>The use of information received by this extension will adhere to the Chrome Web Store User Data Policy, including the Limited Use requirements.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="11-政策變更">11. 政策變更</h2>
+<p>如資料類別、用途、分享對象、保存方式或權限有實質變更，發布者會在變更生效前更新本頁日期與公開產品資訊，並依適用的 private deployment 或未來 Public 發布規範處理。現行 private build 不因此新增自訂同意彈窗或確認按鈕。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="12-聯絡方式">12. 聯絡方式</h2>
+<ul>
+<li class="">發布者：medcloud2-fhir-bridge 專案（GitHub：voho0000）</li>
+<li class="">隱私問題：<a href="https://github.com/voho0000/voho0000.github.io/issues/new" target="_blank" rel="noopener noreferrer" class="">https://github.com/voho0000/voho0000.github.io/issues/new</a></li>
+<li class="">一般支援：<a href="https://github.com/voho0000/voho0000.github.io/issues/new" target="_blank" rel="noopener noreferrer" class="">https://github.com/voho0000/voho0000.github.io/issues/new</a></li>
+<li class="">安全弱點通報：請先透過上述聯絡入口提出不含敏感細節的聯絡請求，取得非公開回報方式後再提供細節。</li>
+</ul>
+</article><article id="en" class="english"><h2>medicloud2-fhir-bridge (雲端懷爾抓抓) Privacy Policy</h2>
+<p>Last updated: October 20, 2026</p>
+<p>Extension version: 0.15.4</p>
+<p>Effective date: July 31, 2026</p>
+<p>Publisher: medcloud2-fhir-bridge project (GitHub: voho0000)</p>
+<p>Privacy and support contact: <a href="https://github.com/voho0000/voho0000.github.io/issues/new" target="_blank" rel="noopener noreferrer" class="">https://github.com/voho0000/voho0000.github.io/issues/new</a></p>
+<p>Published policy URL: <a href="https://mediprisma.tw/medcloud2-fhir-bridge/privacy/" target="_blank" rel="noopener noreferrer" class="">https://mediprisma.tw/medcloud2-fhir-bridge/privacy/</a></p>
+<p>GitHub backup: <a href="https://voho0000.github.io/medcloud2-fhir-bridge/privacy/" target="_blank" rel="noopener noreferrer" class="">https://voho0000.github.io/medcloud2-fhir-bridge/privacy/</a></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="1-scope-and-purpose">1. Scope and purpose</h2>
+<p>medicloud2-fhir-bridge (雲端懷爾抓抓) is a Chrome extension for authorized healthcare professionals. Its single purpose is to obtain clinical reference data for the patient currently displayed in Taiwan NHI MediCloud, convert that data locally into an HL7 FHIR R4 Bundle, and let the user download the result or hand it to MediPrisma's browser-local import flow.</p>
+<p>The extension is not produced, authorized, or endorsed by Taiwan's National Health Insurance Administration. It does not bypass MediCloud authentication or access controls.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="2-data-handled">2. Data handled</h2>
+<p>The extension does not add a first-use consent dialog or extra confirmation buttons. Opening the toolbar popup checks the patient currently displayed by MediCloud so the interface can show the correct workflow state. Clinical content is retrieved, converted, downloaded, or handed to MediPrisma only after the user chooses an existing capture, raw-download, or in-page launcher action, or starts an explicit WinForms control-URL flow. The handling is described in this policy:</p>
+<ul>
+<li class="">Identifiers: name, national ID, resident or other MediCloud patient identifier (de-identification is off by default; enabling it masks display and FHIR identifiers; leaving it disabled preserves the source name, identifier and full birth date without additional masking; filenames remain masked, while raw API responses may still contain direct identifiers), date of birth, sex, and a patient-context HMAC-SHA-256 keyed by a random session-only secret. It prevents patient mixing and offline guessing but remains pseudonymous health information rather than anonymous data.</li>
+<li class="">Health information: encounters, medications, laboratory and examination records, reports, dental procedures, discharge summaries, rehabilitation, remaining medication days, preventive care, cancer screening, allergies, surgeries, special-material claims and inferred material-to-surgery relationships, related clinical reference data, and stable imaging-request descriptors. A short-lived NHI Viewer URL is requested only after the user clicks an image-viewer action and is opened directly without being saved in the exported file.</li>
+<li class="">Authentication information: existing same-origin MediCloud API authorization is observed from page load in a page-memory closure. Only authorization bound to the currently identifiable patient is retained, for at most 30 minutes or an earlier known expiry, and used for necessary same-origin requests after the user starts capture. It is invalidated on a patient change, card change/logout, page exit, or capture authorization rejection.</li>
+<li class="">Website content: the minimum current-patient page content and same-origin API responses needed for the requested feature.</li>
+<li class="">Local preferences and job metadata: de-identification and integration preferences, trusted-source identifiers, validated MediPrisma destination, job IDs, timestamps, sizes, resource counts, masked filenames, tab IDs, status, and non-clinical error codes.</li>
+</ul>
+<p>The extension does not collect general browsing history, location, payment data, personal communications, advertising identifiers, analytics events, or cross-site tracking data.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="3-use-and-sharing">3. Use and sharing</h2>
+<p>The ER shortcut asks for the authorized patient's identifier and seven-digit ROC birth date inside the extension. Cancelled or invalid input does not start a query. These values are held in memory for the requested official card-login and patient-query flow, are not placed in a launch URL or saved by the input page, and are not sent to the publisher. Pending login and query are limited to two minutes; a worker restart requires a fresh request. Birth dates entered manually are marked as user-entered rather than independently verified, and output follows the de-identification setting.</p>
+<p>When the user enables authorized clinical-data supplementation, the extension may send the name, visible identifier, birth date and short-lived job identifiers needed for the current query to the user-configured, source-validated local data provider. It verifies the same patient before receiving authorized SOAP notes, diagnoses, medications, orders and reports. Verified data is merged into the same FHIR result under the same encryption, retention and clearing rules. Source-system login cookies are not exchanged. When de-identification is enabled, supplemental free text without an equivalent masking guarantee is not retrieved. If supplementation is unavailable or cannot be verified, usable MediCloud results remain available with an explanation.</p>
+<p>Data is used only to verify the current patient, retrieve authorized MediCloud data, perform safety and FHIR validation, convert it to FHIR R4, display progress, delete expired results, and complete the user's selected download or MediPrisma import.</p>
+<p>The publisher does not receive patient data, Bundles, raw responses, authorization values, or telemetry. Necessary MediCloud API requests include its access-log parameter, so MediCloud may record the authorized user's query under its own policies; those logs are controlled by MediCloud/NHIA and are not provided to the extension publisher. The extension contains no publisher backend, analytics, advertising, tracking, error-reporting SDK, or remote code.</p>
+<p>When the user chooses MediPrisma, the extension passes the Bundle once to the local file-import control in the configured, allowed <code>https://mediprisma.tw/app/</code> or <code>https://mediprisma.tw/app-hmc/</code> workspace. The Bundle contains only a stable NHI imaging-request descriptor, not a short-lived Viewer URL. After a later user image action, the Bridge obtains a fresh URL from the same-patient MediCloud session, validates it as HTTPS, free of credentials or a custom port, and hosted at <code>nhi.gov.tw</code> or a true subdomain, then opens it directly. The URL is not returned to MediPrisma, written to FHIR, or stored. Subsequent use of MediPrisma, including any optional cloud or AI feature, is outside this extension's control and is subject to the disclosure shown by MediPrisma at that time, the user's choices, and the user's organizational rules.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="4-local-retention">4. Local retention</h2>
+<p>MediPrisma may request the original responses for local comparison using the exact imported Bundle ID. The extension checks its allowed application route, requesting document, original expiry, and current patient in the source MediCloud tab before delivery. Responses are decrypted locally and transferred in bounded chunks; partial transfers are not released to the page. Reading never recaptures data or extends the existing one-hour limit. Original responses are not de-identified by the FHIR name preference. The extension does not automatically upload originals or error reports; any later report is a separate MediPrisma user action.</p>
+<p>Authentication information remains only in page-memory closures under the patient-binding and expiry rules above; it is never written to storage. A completed FHIR Bundle may be gzip-compressed, AES-256-GCM-encrypted, and staged in extension-origin IndexedDB for at most one hour; an exact-expiry alarm and expired-read checks enforce the limit. The original MediCloud responses that produced that Bundle are stored in the same record under the same key, so "download original data" does not have to read MediCloud again; they carry the Bundle's patient binding and expiry and are cleared together with it under the same conditions, including when a patient switch is detected. Before any original-data download is released, the patient currently shown in MediCloud is re-verified; if it no longer matches, the staged copies are cleared and nothing is written. A raw download taken without first running a conversion is processed in memory only and is not retained. <code>unlimitedStorage</code> supports large Bundles beyond the session-storage quota. Its decryption key exists only in <code>chrome.storage.session</code>. If IndexedDB is unavailable, an encrypted result of at most 3 MiB may be staged in session storage instead, with the same patient binding, expiry and clearing rules. Oversized optional raw responses may be omitted from this fallback; the primary result is never truncated. The extension creates no persistent consent record; since v0.5.6 it deletes the legacy two-field consent record on startup. Apart from that compatibility cleanup, it does not use <code>chrome.storage.local</code> or <code>chrome.storage.sync</code> for patient, health, or consent data.</p>
+<p>If conversion fails after source responses have been obtained, those responses may also be compressed, encrypted and retained for a raw download after another same-patient check. The same one-hour maximum, patient binding and clearing rules apply. Cancelled or mismatched-patient jobs do not retain them.</p>
+<p>De-identification and integration preferences, trusted-source identifiers and the validated MediPrisma destination are stored in <code>chrome.storage.local</code> until changed or cleared, or the extension is removed. Legacy <code>localStorage</code> de-identification preferences may be migrated during an upgrade; failed migration or preference reads retain masking. These preferences do not contain clinical records and are not synchronized through <code>chrome.storage.sync</code>.</p>
+<p>Downloaded files are controlled by the user and their organization. The publisher cannot access or delete them.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="5-security-and-user-choices">5. Security and user choices</h2>
+<p>The extension uses exact host permissions, HTTPS, repeated authoritative patient-context checks at data egress, short-lived state, restricted session storage, packaged code only, and a narrow MediPrisma handoff context. The current private/internal build still contains a fixed encrypted MediPrisma credential with replay risk; it must be revoked and replaced by a server-minted single-use token before production release. Users may choose not to start capture, not to use MediPrisma, or to remove the extension. Users should never send real patient records, full identifiers, credentials, or tokens through public support channels.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="6-clinical-limitation">6. Clinical limitation</h2>
+<p>MediCloud data and the extension's output are clinical reference information, not a diagnosis, treatment recommendation, or official medical record. Users must follow authoritative sources, professional judgment, and their organization's approval, confirmation, signature, and retention processes.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="7-limited-use-statement">7. Limited Use statement</h2>
+<p>The use of information received by this extension will adhere to the Chrome Web Store User Data Policy, including the Limited Use requirements. User data is used only for the disclosed single purpose and is not sold, used for personalized advertising, provided to data brokers, or used for creditworthiness or lending.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="8-changes-and-contact">8. Changes and contact</h2>
+<p>Material changes to data handling will be reflected in this policy and the published product information before they take effect, with any additional process required by the applicable deployment policy handled at that time.</p>
+<ul>
+<li class="">Publisher: medcloud2-fhir-bridge project (GitHub: voho0000)</li>
+<li class="">Privacy contact: <a href="https://github.com/voho0000/voho0000.github.io/issues/new" target="_blank" rel="noopener noreferrer" class="">https://github.com/voho0000/voho0000.github.io/issues/new</a></li>
+<li class="">Support URL: <a href="https://github.com/voho0000/voho0000.github.io/issues/new" target="_blank" rel="noopener noreferrer" class="">https://github.com/voho0000/voho0000.github.io/issues/new</a></li>
+<li class="">Security reports: first request a private reporting channel through the contact above without posting sensitive details in a public issue.</li>
+</ul></article></main>
 
     <footer>
       <p>© 2026 medcloud2-fhir-bridge project · This page does not load analytics, tracking scripts, or external fonts.</p>
