@@ -1,14 +1,31 @@
-<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="canonical" href="https://mediprisma.tw/vghtpe-fhir-bridge/privacy/"><title>隱私權政策｜北榮懷爾抓抓</title><style>body{max-width:860px;margin:40px auto;padding:0 24px;font:17px/1.8 system-ui,sans-serif;color:#243646;background:#f8fafb}h1,h2{color:#154b62}h2{margin-top:32px}p,li{overflow-wrap:anywhere}header{border-bottom:1px solid #ccdce3;padding-bottom:20px}a{color:#076b84}</style><header><h1>北榮懷爾抓抓 vghtpe-fhir-bridge 隱私權政策</h1><p>適用版本：0.14.2 起｜生效日期：2026-10-18</p></header><main><p>正式政策網址：<a href="https://mediprisma.tw/vghtpe-fhir-bridge/privacy/">mediprisma.tw/vghtpe-fhir-bridge/privacy/</a>。本頁保留為備援。</p><h2>用途與資料</h2>
-<p>協助已有院內登入及病歷調閱權限的使用者，取得目前北榮病人的資料，在瀏覽器轉換為 FHIR R4 並下載，另提供 RAW／HTML 下載與已配對擴充功能的急診／門診整合。工具不取代院方授權、稽核或正式病歷。</p>
-<p>依操作可能處理姓名、病歷號、身分識別、生日、性別、就診、診斷、SOAP、用藥、醫囑、檢驗／檢查、生命徵象及原始頁面。工作分頁 URL 與病人情境用於擷取、路由及避免跨病人處理。院內請求使用既有瀏覽器登入工作階段，可能附帶該來源 cookie；沒有 cookies API 權限不代表請求不使用認證 cookie。本版不提供 NIIS 預防接種查詢。</p>
-<h2>處理與傳送對象</h2>
-<ul><li>院內：向支援來源請求已授權資料；來源服務有自己的稽核及保存規則。</li><li>本機下載：FHIR／JSON 及 RAW／HTML 檔案存到使用者下載位置。RAW／HTML 不去識別化，可能保留完整敏感資料。 FHIR 去識別化為下載 Bundle 的選用設定，不保證匿名，也不套用到已配對的急診／門診資料交付。</li><li>已配對的雲端懷爾抓抓：啟用相關急診／門診流程時，向已配對 extension 傳遞所需病人情境、狀態與院內結果。對端取得資料後的處理需一併查閱其政策。因此不能宣稱所有資料都不離開裝置。</li><li>手動 MediPrisma：本版只依使用者操作開啟網站，不自動傳送病歷或匯入 Bundle。若使用者另在網站手動上傳或操作，依該網站政策處理。</li></ul>
-<p>本版已移除 backend、frontend、Docker、upload 及自動交接功能，不透過原後端上傳流程送出病歷。此變更不撤回舊版已送出的資料，也不代表來源網站或配對對端停止其獨立資料處理。</p>
-<h2>本機儲存、保存與刪除</h2>
-<p>Chrome 的 storage.local 保存配對 ID、本機去識別化金鑰、目前工作狀態與最多 20 筆歷史摘要；介面顯示最近 5 筆。摘要可能含病歷號、錯誤、時間、檔名及下載交付狀態，不能稱完全匿名，也沒有以天數自動到期的承諾。一般的範圍、門診版與去識別化選項存於 storage.sync，可能隨使用者的 Chrome 同步設定傳送。啟動新版背景工作時，刪除舊版留在 local／sync 的 NIIS token，不讀取或遷移其值。背景工作也清除已淘汰的後端網址、API key 與上傳模式設定。</p>
-<p>關閉或移除 extension 不會刪除既有下載檔、系統／瀏覽器備份、院內稽核或對端已收到的資料。取消只阻止尚未啟動的後續動作，無法撤回已啟動下載或已交付 peer 的內容。本版配對設定未提供清空選項。需要停止後續讀取及配對時，可在 Chrome 停用擴充功能。這些操作不會刪除既有下載或對端資料。Chrome 儲存不是本工具另行提供的加密保管箱，請保護裝置、profile 與下載目錄。</p>
-<p>如需查閱、更正或刪除來源／對端資料，請依相應管理者流程處理。支援請求不得附未授權病歷、cookie、token、金鑰或 RAW 檔案。</p>
-<h2>資料用途與聯絡方式</h2>
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="canonical" href="https://mediprisma.tw/vghtpe-fhir-bridge/privacy/"><title>隱私權政策｜北榮懷爾抓抓 v0.14.11</title><style>body{max-width:860px;margin:40px auto;padding:0 24px;font:17px/1.8 system-ui,sans-serif;color:#243646;background:#f8fafb}h1,h2{color:#154b62}h2{margin-top:32px}p,li{overflow-wrap:anywhere}header{border-bottom:1px solid #ccdce3;padding-bottom:20px}a{color:#076b84}</style></head><body><main><header><h1>北榮懷爾抓抓隱私權政策</h1></header>
+<p>適用版本：0.14.11<br>
+原政策生效日期：2026-10-18<br>
+本次更新日期：2026-10-22</p>
+<p>本政策正式網址：<a href="https://mediprisma.tw/vghtpe-fhir-bridge/privacy/" target="_blank" rel="noopener noreferrer">mediprisma.tw/vghtpe-fhir-bridge/privacy/</a><br>
+<!-- -->備援網址：<a href="https://voho0000.github.io/vghtpe-fhir-bridge/privacy/" target="_blank" rel="noopener noreferrer">GitHub Pages</a></p>
+<h2 id="用途與資料">用途與資料</h2>
+<p>協助已有院內登入及病歷調閱權限的使用者，取得目前北榮病人的資料，在瀏覽器轉換為 FHIR R4 並下載。另提供原始 HTML 與急診摘要 PDF 下載，以及與已配對雲端懷爾抓抓的同病人急診、門診整合。工具不取代院方授權、調閱稽核或正式病歷。</p>
+<p>依操作可能處理姓名、病歷號、完整或遮蔽的身分識別碼、生日、性別、就診、診斷、SOAP、用藥、醫囑、檢驗與檢查、生命徵象、原始 HTML 及急診摘要 PDF。這些資料用於確認同一病人、取得病歷、轉換 FHIR、下載或配對整合。工作分頁 URL、來源主機與病人情境用於來源核對及工作路由，不用於追蹤一般瀏覽歷史或一般鍵盤、滑鼠活動。</p>
+<p>院內請求沿用使用者既有瀏覽器登入工作階段，可能附帶該來源的認證 cookie。沒有 cookies API 權限不代表請求不使用 cookie。本版不提供 NIIS 預防接種查詢，也不要求使用者設定 NIIS token 或病歷上傳後端。</p>
+<h2 id="院內查詢與調閱稽核">院內查詢與調閱稽核</h2>
+<p>使用者啟動獨立下載或配對整合後，工具可能操作受支援的 HIS、qemr 與 ERS 頁面。配對門診流程可用姓名查詢，並以生日及其他身分資料核對病人。姓名含無法辨識的字時，可能使用部分姓名搜尋；無法唯一確認時，交由使用者在 HIS 核對並選定病人，再按「繼續抓取」重新核對及接續。</p>
+<p>獨立下載及符合身分核對條件的門診流程，在 HIS 顯示調閱視窗時，可自動選擇並送出「醫療需要」。工具等待院內正常調閱稽核完成後才取得病歷；無法確認病人或控制項時停止或等待人工處理。調閱理由與操作可能由院方記錄，依院方的稽核及保存規則處理。使用者須確認本次操作符合其院內權限與實際醫療用途。</p>
+<h2 id="處理與傳送對象">處理與傳送對象</h2>
+<ul>
+<li>院內：向支援來源請求已授權資料；來源服務有自己的稽核及保存規則。</li>
+<li>本機下載：FHIR JSON 與原始 HTML ZIP 存到使用者下載位置，原始資料可能包含急診摘要 PDF。<strong>RAW、HTML 與 PDF 不去識別化，可能保留完整敏感資料。</strong> FHIR 去識別化為下載 Bundle 的選用設定，不保證匿名，也不套用到配對的急診、門診資料交付。原始頁面可能保留所選期間以外的索引或同次就醫資料。</li>
+<li>已配對的雲端懷爾抓抓：未設定配對值時，預設使用雲端商店版 ID <code>hhfoejpppfbkadcjifgfmfpdhikicmgf</code>；使用者可修改或解除配對。急診啟動時，向配對擴充功能傳遞經核對的身分識別碼、生日及本次工作資訊。門診補抓時，接收對端的姓名、遮蔽身分識別碼及可用的生日、性別等核對資料，再向對端交付同病人的門診、報告與工作狀態。門診內容與報告可能分階段交付。傳輸檢查配對 ID、訊息協定與本次工作憑證；不是對任意擴充功能開放病歷。對端收到資料後的處理依<a href="https://mediprisma.tw/medcloud2-fhir-bridge/privacy/" target="_blank" rel="noopener noreferrer">雲端懷爾抓抓隱私權政策</a>辦理，不能宣稱所有資料都不離開裝置。</li>
+<li>手動 MediPrisma：本版只依使用者操作開啟網站，不自動傳送病歷或匯入 Bundle。若使用者另在網站手動上傳或操作，依該網站政策處理。</li>
+</ul>
+<p>本版不提供舊版的病歷後端上傳或自動匯入 MediPrisma 網站功能。這不撤回舊版已送出的資料，也不影響院內來源或配對對端依各自政策處理已取得的資料。</p>
+<h2 id="本機儲存保存與刪除">本機儲存、保存與刪除</h2>
+<p>Chrome 的 storage.local 保存配對 ID、本機去識別化金鑰、目前工作狀態與最多 20 筆歷史摘要；介面顯示最近 5 筆。工作狀態及摘要可能含病歷號、來源、錯誤、時間、檔名及下載交付狀態，不能稱為匿名資料，也沒有按天自動到期機制。下載 ID 與檔名表示下載已啟動，不保證作業系統已完整保存。</p>
+<p>取得範圍、門診版與去識別化選項存於 storage.sync，可能隨使用者的 Chrome 同步設定傳送。storage.session 保存門診工作識別，避免背景工作重啟後沿用舊工作；重啟後需重新啟動。配對流程中的身分核對、接續資訊與病歷結果暫存於記憶體；完成確認、取消、逾時、解除配對或背景工作結束時，依工作流程釋放，不作為完整病歷資料庫持久保存。</p>
+<p>新版背景工作啟動時，刪除舊版留在 local 與 sync 的 NIIS token，不讀取或遷移其值，並清除已淘汰的後端網址、API key 與上傳模式設定。Chrome 儲存不是本工具另行提供的加密保管箱，請保護裝置、Chrome 使用者設定檔與下載目錄。</p>
+<p>可在「進階設定」清空雲端擴充功能 ID 並儲存，以解除配對並使原配對工作失效；明確儲存的空值會維持解除配對，不會回復預設 ID。也可在 Chrome 停用擴充功能，以停止後續讀取。取消或解除配對不能撤回已啟動的下載、已交付對端的資料或已送出的院內調閱紀錄。</p>
+<p>解除安裝、停用或關閉擴充功能，不會刪除既有下載檔、系統與瀏覽器備份、院內稽核紀錄或對端已收到的資料。下載檔案由使用者依院方與裝置管理規範保存或刪除。來源及對端資料的查閱、更正或刪除，須依相應管理者流程處理。</p>
+<p>支援請求不得附未授權病歷、cookie、token、金鑰或 RAW 檔案。</p>
+<h2 id="資料用途與聯絡方式">資料用途與聯絡方式</h2>
 <p>資料僅用於本政策所述的病歷取得、FHIR 轉換、本機下載與明確配對功能。除經核准的用途外，不將使用者資料販售或轉移給第三方；不基於與產品單一用途無關的目的使用或轉移資料；不將資料用於信用評等或貸款。</p>
-<p>發布者：北榮懷爾抓抓 vghtpe-fhir-bridge 專案（GitHub：voho0000）。隱私與支援聯絡：https://github.com/voho0000/voho0000.github.io/issues 。請勿在公開 issue 提供病歷、RAW 檔案、cookie、憑證或可識別病人的資料。資料流變更時會同步更新政策與商店揭露。<br></p>
-</main><footer><p>聯絡與支援：<a href="https://github.com/voho0000/voho0000.github.io/issues">GitHub Issues</a></p></footer></html>
+<p>發布者：北榮懷爾抓抓 vghtpe-fhir-bridge 專案（GitHub：voho0000）。隱私與支援聯絡：<a href="https://github.com/voho0000/voho0000.github.io/issues" target="_blank" rel="noopener noreferrer">GitHub Issues</a>。請勿在公開 issue 提供病歷、RAW 檔案、cookie、憑證或可識別病人的資料。資料流變更時會同步更新政策與商店揭露。</p></main></body></html>
